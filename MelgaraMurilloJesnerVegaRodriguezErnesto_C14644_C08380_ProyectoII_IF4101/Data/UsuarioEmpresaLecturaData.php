@@ -7,7 +7,7 @@ class UsuarioEmpresaLecturaData {
     private $host = "localhost:3306";
     private $user = "root";
     private $password = "";
-    private $bd = "lenguajes";
+    private $bd = "phpmyadmin";
 
     public function conectar() {
         try {

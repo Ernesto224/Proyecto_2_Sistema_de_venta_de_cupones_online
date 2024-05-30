@@ -3,18 +3,16 @@ $pdo = null;
 $host = "localhost:3306";
 $user = "root";
 $password = "";
-$bd = "lenguajes";
+$bd = "phpmyadmin";
 
 require_once "../Model/Empresa.php";
 
 function conectar() {
     try {
-        $GLOBALS['pdo'] = new PDO("mysql:host=" .$GLOBALS['host'] . ";dbname=" . $GLOBALS['bd'], $GLOBALS['user'], $GLOBALS['password']);
+        $GLOBALS['pdo'] = new PDO("mysql:host=" . $GLOBALS['host'] . ";dbname=" . $GLOBALS['bd'], $GLOBALS['user'], $GLOBALS['password']);
         $GLOBALS['pdo']->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     } catch (PDOException $e) {
-        print "Error!: No se pudo conectar a la bd " . $GLOBALS['bd'] . "<br/>";
-        print "\nError!: " . $e->getMessage() . "<br/>";
-        die();
+        throw new Exception("Error!: No se pudo conectar a la bd " . $GLOBALS['bd'] . "\nError!: " . $e->getMessage());
     }
 }
 
@@ -43,7 +41,7 @@ class EmpresaModificarData {
             desconectar();
             return $idAutoIncrement;
         } catch (Exception $e) {
-            die("Error: " . $e->getMessage());
+            throw new Exception("Error al registrar la empresa: " . $e->getMessage());
         }
     }
 
@@ -75,14 +73,13 @@ class EmpresaModificarData {
             desconectar();
             return true;
         } catch (Exception $e) {
-            die("Error: " . $e->getMessage());
+            throw new Exception("Error al actualizar la empresa: " . $e->getMessage());
         }
     }
-
     public function eliminarEmpresa($id) {
         try {
             conectar();
-            $query = "DELETE FROM Empresa WHERE IDEmpresa = :IDEmpresa";
+            $query = "UPDATE Empresa SET Habilitado = 0 WHERE IDEmpresa = :IDEmpresa";
             $sentencia = $GLOBALS['pdo']->prepare($query);
             $sentencia->bindParam(':IDEmpresa', $id, PDO::PARAM_INT);
             $sentencia->execute();
@@ -92,6 +89,6 @@ class EmpresaModificarData {
         } catch (Exception $e) {
             die("Error: " . $e->getMessage());
         }
-    }
+    }    
 }
 ?>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Llamar a Métodos</title>
+    <script src="Prueba.js"></script>
+</head>
+
+<body>
+    <h1>Pruebas de API</h1>
+    <h2>Cupones</h2>
+    <button onclick="obtenerCuponPorId(1)">Obtener Cupón Por ID</button>
+    <button onclick="obtenerTodosLosCupones()">Obtener Todos los Cupones</button>
+    <h2>Empresas</h2>
+    <button onclick="obtenerEmpresaPorId(1)">Obtener Empresa Por ID</button>
+    <button onclick="obtenerTodasLasEmpresas()">Obtener Todas las Empresas</button>
+    <button onclick="crearEmpresa({
+        NombreEmpresa: 'Nueva Empresa',
+        DireccionFisica: 'Calle Principal 123',
+        CedulaFisicaJuridica: '123456789',
+        FechaCreacion: '2024-05-30',
+        CorreoElectronico: 'empresa@nueva.com',
+        Telefono: '555-1234',
+        Contrasenia: 'contrasenia123',
+        Habilitado: 1
+    })">Crear Empresa</button>
+    <button onclick="actualizarEmpresa({
+        IDEmpresa: 1,
+        NombreEmpresa: 'Empresa Actualizada',
+        DireccionFisica: 'Avenida Secundaria 456',
+        CedulaFisicaJuridica: '987654321',
+        FechaCreacion: '2024-05-30',
+        CorreoElectronico: 'empresa@actualizada.com',
+        Telefono: '555-5678',
+        Contrasenia: 'contrasenia1234',
+        Habilitado: 1
+    })">Actualizar Empresa</button>
+    <button onclick="eliminarEmpresa(2)">Eliminar Empresa</button>
+</body>
+
+</html>

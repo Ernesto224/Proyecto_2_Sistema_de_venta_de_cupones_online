@@ -3,7 +3,7 @@ $pdo = null;
 $host = "localhost:3306";
 $user = "root";
 $password = "";
-$bd = "Tarea3_Lenguajes_PHP";
+$bd = "phpmyadmin";
 
 require_once "../Model/UsuarioAdmin.php";
 

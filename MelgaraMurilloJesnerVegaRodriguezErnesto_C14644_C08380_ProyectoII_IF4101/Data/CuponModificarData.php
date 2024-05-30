@@ -10,7 +10,7 @@ class CuponModificarData {
         $this->host = "localhost:3306";
         $this->user = "root";
         $this->password = "";
-        $this->bd = "lenguajes";
+        $this->bd = "phpmyadmin";
     }
 
     private function conectar() {
@@ -31,8 +31,8 @@ class CuponModificarData {
     public function registrarCupon(Cupon $cupon) {
         try {
             $this->conectar();
-            $query = "INSERT INTO Cupon(Nombre, Imagen, Ubicacion, PrecioCuponBase, PrecioCuponVenta, FechaVencimientoOferta, IDEmpresa, IDCategoria, Habilitado,EnPromocion)
-                      VALUES(:Nombre, :Imagen, :Ubicacion, :PrecioCuponBase, :PrecioCuponVenta, :FechaVencimientoOferta, :IDEmpresa, :Habilitado,:EnPromocion)";
+            $query = "INSERT INTO Cupon(Nombre, Imagen, Ubicacion, PrecioCuponBase, PrecioCuponVenta, FechaVencimientoOferta, IDEmpresa, IDCategoria, Habilitado, EnPromocion)
+                      VALUES(:Nombre, :Imagen, :Ubicacion, :PrecioCuponBase, :PrecioCuponVenta, :FechaVencimientoOferta, :IDEmpresa, :IDCategoria, :Habilitado, :EnPromocion)";
             $sentencia = $this->pdo->prepare($query);
             $sentencia->bindParam(':Nombre', $cupon->Nombre);
             $sentencia->bindParam(':Imagen', $cupon->Imagen);
@@ -41,8 +41,9 @@ class CuponModificarData {
             $sentencia->bindParam(':PrecioCuponVenta', $cupon->PrecioCuponVenta);
             $sentencia->bindParam(':FechaVencimientoOferta', $cupon->FechaVencimientoOferta);
             $sentencia->bindParam(':IDEmpresa', $cupon->IDEmpresa);
+            $sentencia->bindParam(':IDCategoria', $cupon->IDCategoria);
             $sentencia->bindParam(':Habilitado', $cupon->Habilitado);
-            $sentencia->bindParam(':EnPromocion', $cupon->EnPromocion)
+            $sentencia->bindParam(':EnPromocion', $cupon->EnPromocion);  // <-- Punto y coma añadido aquí
             $sentencia->execute();
             $idAutoIncrement = $this->pdo->lastInsertId();
             $sentencia->closeCursor();
@@ -77,7 +78,7 @@ class CuponModificarData {
             $sentencia->bindParam(':IDEmpresa', $cupon->IDEmpresa);
             $sentencia->bindParam(':Habilitado', $cupon->Habilitado);
             $sentencia->bindParam(':IDCupon', $cupon->IDCupon);
-            $sentencia->bindParam(':EnPromocion', $cupon->EnPromocion)
+            $sentencia->bindParam(':EnPromocion', $cupon->EnPromocion);  // <-- Punto y coma añadido aquí
             $sentencia->execute();
             $sentencia->closeCursor();
             $this->desconectar();

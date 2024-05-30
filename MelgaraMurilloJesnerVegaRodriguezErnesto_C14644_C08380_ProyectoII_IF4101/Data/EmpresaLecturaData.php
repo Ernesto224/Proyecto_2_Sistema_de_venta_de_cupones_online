@@ -3,21 +3,17 @@ require_once "../Model/Empresa.php";
 
 class EmpresaLecturaData {
     private $pdo;
-
-    public function __construct() {
-        $this->pdo = null;
-        $this->host = "localhost:3306";
-        $this->user = "root";
-        $this->password = "";
-        $this->bd = "lenguajes";
-    }
+    private $host = "localhost:3306";
+    private $user = "root";
+    private $password = "";
+    private $bd = "phpmyadmin";
 
     private function conectar() {
         try {
             $this->pdo = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->bd, $this->user, $this->password);
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
-            die("Error!: No se pudo conectar a la bd " . $this->bd . "<br/>\nError!: " . $e->getMessage() . "<br/>");
+            die(json_encode(['error' => "Error!: No se pudo conectar a la bd " . $this->bd . " - " . $e->getMessage()]));
         }
     }
 
@@ -37,8 +33,7 @@ class EmpresaLecturaData {
             $this->desconectar();
             return $resultado;
         } catch (Exception $e) {
-            die("Error: " . $e->getMessage());
-            return null;
+            die(json_encode(['error' => "Error: " . $e->getMessage()]));
         }
     }
 
@@ -53,8 +48,7 @@ class EmpresaLecturaData {
             $this->desconectar();
             return $resultado;
         } catch (Exception $e) {
-            die("Error: " . $e->getMessage());
-            return null;
+            die(json_encode(['error' => "Error: " . $e->getMessage()]));
         }
     }
 }

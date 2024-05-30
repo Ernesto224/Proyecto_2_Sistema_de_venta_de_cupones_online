@@ -22,13 +22,13 @@ class CuponLectura {
                     $cuponData['PrecioCuponVenta'],
                     $cuponData['FechaVencimientoOferta'],
                     $cuponData['IDEmpresa'],
-                    $cuponData['IDCategoria'],
-                    $cuponData['Habilitado']
+                    $cuponData['Habilitado'],
+                    $cuponData['EnPromocion']
                 );
             }
             return null;
         } catch (Exception $e) {
-            die("Error: " . $e->getMessage());
+            throw new Exception("Error al obtener el cupón por ID: " . $e->getMessage());
         }
     }
 
@@ -46,13 +46,13 @@ class CuponLectura {
                     $cuponData['PrecioCuponVenta'],
                     $cuponData['FechaVencimientoOferta'],
                     $cuponData['IDEmpresa'],
-                    $cuponData['IDCategoria'],
-                    $cuponData['Habilitado']
+                    $cuponData['Habilitado'],
+                    $cuponData['EnPromocion']
                 );
             }
             return $cupones;
         } catch (Exception $e) {
-            die("Error: " . $e->getMessage());
+            throw new Exception("Error al obtener todos los cupones: " . $e->getMessage());
         }
     }
 }

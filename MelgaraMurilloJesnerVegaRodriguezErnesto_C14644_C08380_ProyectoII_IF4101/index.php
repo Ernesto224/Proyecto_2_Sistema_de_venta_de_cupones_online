@@ -60,3 +60,4 @@ switch ($requestUri) {
         echo json_encode(['error' => 'Endpoint no encontrado']);
         break;
 }
+?>

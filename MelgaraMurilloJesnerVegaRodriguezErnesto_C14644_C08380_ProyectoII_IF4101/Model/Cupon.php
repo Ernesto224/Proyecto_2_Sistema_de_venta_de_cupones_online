@@ -11,6 +11,7 @@ class Cupon {
     public $IDEmpresa;
     public $Habilitado;
     public $EnPromocion;
+    
     public function __construct($IDCupon, $Nombre, $Imagen, $Ubicacion, $PrecioCuponBase, $PrecioCuponVenta, $FechaVencimientoOferta, $IDEmpresa, $Habilitado, $EnPromocion) {
         $this->IDCupon = $IDCupon;
         $this->Nombre = $Nombre;
@@ -21,12 +22,13 @@ class Cupon {
         $this->FechaVencimientoOferta = $FechaVencimientoOferta;
         $this->IDEmpresa = $IDEmpresa;
         $this->Habilitado = $Habilitado;
-        $this -> EnPromocion = $EnPromocion;
+        $this->EnPromocion = $EnPromocion; 
     }
 
     public function toJSON() {
         return json_encode(get_object_vars($this));
     }
 }
+
 
 ?>

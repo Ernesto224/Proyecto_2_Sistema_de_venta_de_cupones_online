@@ -1,6 +1,9 @@
 <?php
 
-require_once "../Business/CuponLectura.php";
+require_once '../Business/CuponLectura.php';
+
+header('Access-Control-Allow-Origin: *');
+header('Content-Type: application/json');
 
 class CuponLecturaController
 {
@@ -13,22 +16,33 @@ class CuponLecturaController
 
     public function handleRequest()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'GET' || $_SERVER['REQUEST_METHOD'] == 'POST') {
-            if (isset($_GET['id'])) {
-                $cupon = $this->cuponLectura->obtenerCuponPorId($_GET['id']);
-                if ($cupon) {
-                    echo json_encode($cupon);
+        try {
+            if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+                if (isset($_GET['id'])) {
+                    $cupon = $this->cuponLectura->obtenerCuponPorId($_GET['id']);
+                    if ($cupon) {
+                        echo json_encode($cupon);
+                    } else {
+                        http_response_code(404);
+                        echo json_encode(['error' => 'Cupón no encontrado']);
+                    }
                 } else {
-                    header("HTTP/1.1 404 Not Found");
-                    exit();
+                    $cupones = $this->cuponLectura->obtenerTodosLosCupones();
+                    echo json_encode($cupones);
                 }
-            } else {
-                $cupones = $this->cuponLectura->obtenerTodosLosCupones();
-                echo json_encode($cupones);
+                http_response_code(200);
+                exit();
             }
-            exit();
+            http_response_code(400);
+            echo json_encode(['error' => 'Método no permitido']);
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode(['error' => 'Error del servidor: ' . $e->getMessage()]);
         }
-        header("HTTP/1.1 400 Bad Request");
     }
 }
+
+// Instancia del controlador y manejo de la solicitud
+$controller = new CuponLecturaController();
+$controller->handleRequest();
 ?>
