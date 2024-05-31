@@ -1,7 +1,8 @@
 <?php
-require_once "../Model/Cupon.php";
+require_once "../Model/CategoriaCupon.php";
 
-class CuponLecturaData {
+class CategoriaCuponLecturaData {
+
     private $pdo;
     private $host = "localhost:3307";
     private $user = "root";
@@ -20,11 +21,11 @@ class CuponLecturaData {
     private function desconectar() {
         $this->pdo = null;
     }
-    
-    function obtenerCuponPorId($id) {
+
+    function obtenerCategoriaPorId($id) {
         try {
             $this->conectar();
-            $query = "SELECT * FROM Cupon WHERE IDCupon = :id";
+            $query = "SELECT * FROM categoriacupon WHERE IDCategoria = :id";
             $sentencia = $this->pdo->prepare($query);
             $sentencia->bindParam(':id', $id, PDO::PARAM_INT);
             $sentencia->setFetchMode(PDO::FETCH_ASSOC);
@@ -32,7 +33,7 @@ class CuponLecturaData {
             $resultado = $sentencia->fetch();
             $this->desconectar();
             if (!$resultado) {
-                throw new Exception("Cupón no encontrado");
+                throw new Exception("Categoria no encontrada");
             }
             return $resultado;
         } catch (Exception $e) {
@@ -42,17 +43,17 @@ class CuponLecturaData {
         }
     }
 
-    function obtenerTodosLosCupones() {
+    function obtenerTodasLasCategorias() {
         try {
             $this->conectar();
-            $query = "SELECT * FROM Cupon";
+            $query = "SELECT * FROM categoriacupon";
             $sentencia = $this->pdo->prepare($query);
             $sentencia->setFetchMode(PDO::FETCH_ASSOC);
             $sentencia->execute();
             $resultado = $sentencia->fetchAll();
             $this->desconectar();
             if (!$resultado) {
-                throw new Exception("No se encontraron cupones");
+                throw new Exception("No se encontraron categorias");
             }
             return $resultado;
         } catch (Exception $e) {
@@ -62,5 +63,6 @@ class CuponLecturaData {
         }
     }
 
-}
+} 
+
 ?>

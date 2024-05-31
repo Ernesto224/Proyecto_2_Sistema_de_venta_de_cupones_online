@@ -3,7 +3,7 @@ $pdo = null;
 $host = "localhost:3306";
 $user = "root";
 $password = "";
-$bd = "phpmyadmin";
+$bd = "tarea3_lenguajes_php";
 
 require_once "../Model/Empresa.php";
 
@@ -24,8 +24,24 @@ class EmpresaModificarData {
     public function registrarEmpresa(Empresa $empresa) {
         try {
             conectar();
-            $query = "INSERT INTO Empresa (NombreEmpresa, DireccionFisica, CedulaFisicaJuridica, FechaCreacion, CorreoElectronico, Telefono, Contrasenia, Habilitado) 
-                      VALUES (:NombreEmpresa, :DireccionFisica, :CedulaFisicaJuridica, :FechaCreacion, :CorreoElectronico, :Telefono, :Contrasenia, :Habilitado)";
+            $query = "INSERT INTO Empresa (NombreEmpresa, 
+                                DireccionFisica, 
+                                CedulaFisicaJuridica, 
+                                FechaCreacion, 
+                                CorreoElectronico, 
+                                Telefono, 
+                                Contrasenia, 
+                                Habilitado,
+                                CredencialesTemporales) 
+                        VALUES (:NombreEmpresa, 
+                                :DireccionFisica, 
+                                :CedulaFisicaJuridica, 
+                                :FechaCreacion, 
+                                :CorreoElectronico, 
+                                :Telefono, 
+                                :Contrasenia, 
+                                :Habilitado, 
+                                :CredencialesTemporales)";
             $sentencia = $GLOBALS['pdo']->prepare($query);
             $sentencia->bindParam(':NombreEmpresa', $empresa->NombreEmpresa);
             $sentencia->bindParam(':DireccionFisica', $empresa->DireccionFisica);
@@ -35,6 +51,7 @@ class EmpresaModificarData {
             $sentencia->bindParam(':Telefono', $empresa->Telefono);
             $sentencia->bindParam(':Contrasenia', $empresa->Contrasenia);
             $sentencia->bindParam(':Habilitado', $empresa->Habilitado);
+            $sentencia->bindParama(':CredencialesTemporales', $empresa->CredencialesTemporales);
             $sentencia->execute();
             $idAutoIncrement = $GLOBALS['pdo']->lastInsertId();
             $sentencia->closeCursor();
@@ -56,7 +73,8 @@ class EmpresaModificarData {
                       CorreoElectronico = :CorreoElectronico, 
                       Telefono = :Telefono, 
                       Contrasenia = :Contrasenia, 
-                      Habilitado = :Habilitado 
+                      Habilitado = :Habilitado,
+                      CredencialesTemporales = :CredencialesTemporales
                       WHERE IDEmpresa = :IDEmpresa";
             $sentencia = $GLOBALS['pdo']->prepare($query);
             $sentencia->bindParam(':NombreEmpresa', $empresa->NombreEmpresa);
@@ -68,6 +86,7 @@ class EmpresaModificarData {
             $sentencia->bindParam(':Contrasenia', $empresa->Contrasenia);
             $sentencia->bindParam(':Habilitado', $empresa->Habilitado);
             $sentencia->bindParam(':IDEmpresa', $empresa->IDEmpresa);
+            $sentencia->bindParama(':CredencialesTemporales', $empresa->CredencialesTemporales);
             $sentencia->execute();
             $sentencia->closeCursor();
             desconectar();
