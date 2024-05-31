@@ -2,37 +2,45 @@
 
 require_once '../Business/UsuarioEmpresaLectura.php';
 require_once '../Model/UsuarioEmpresa.php';
+
 header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: POST, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
+
+// Manejar las solicitudes OPTIONS (Preflight request)
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
 
 $usuarioEmpresaLectura = new UsuarioEmpresaLectura();
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $data = json_decode(file_get_contents("php://input"), true);
-    
-    if (isset($data['nombreUsuario']) && isset($data['contrasenia'])) {
-        $nombreUsuario = $data['nombreUsuario'];
-        $contrasenia = $data['contrasenia'];
+try {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (isset($_POST['nombreUsuario']) && isset($_POST['contrasenia'])) {
+            $nombreUsuario = $_POST['nombreUsuario'];
+            $contrasenia = $_POST['contrasenia'];
 
-        $resultado = $usuarioEmpresaLectura->verificarInicioSesion($nombreUsuario, $contrasenia);
+            $resultado = $usuarioEmpresaLectura->verificarInicioSesion($nombreUsuario, $contrasenia);
 
-        if ($resultado) {
-            // Si las credenciales son válidas, devuelve el resultado en formato JSON
-            echo json_encode($resultado);
-            http_response_code(200);
+            if ($resultado) {
+                echo json_encode($resultado);
+                http_response_code(200);
+            } else {
+                echo json_encode(['error' => 'Credenciales inválidas']);
+                http_response_code(404);
+            }
         } else {
-            // Si las credenciales no son válidas, devuelve un mensaje de error y un código de respuesta 404
-            echo json_encode(['error' => 'Credenciales inválidas']);
-            http_response_code(404);
+            echo json_encode(['error' => 'Faltan datos de inicio de sesión']);
+            http_response_code(400);
         }
     } else {
-        // Si los datos de inicio de sesión no están completos, devuelve un mensaje de error y un código de respuesta 400
-        echo json_encode(['error' => 'Faltan datos de inicio de sesión']);
-        http_response_code(400);
+        echo json_encode(['error' => 'Método no permitido']);
+        http_response_code(405);
     }
-} else {
-    // Si el método de solicitud no es POST, devuelve un mensaje de error y un código de respuesta 405
-    echo json_encode(['error' => 'Método no permitido']);
-    http_response_code(405);
+} catch (Exception $e) {
+    http_response_code(500);
+    echo json_encode(['error' => 'Error: ' . $e->getMessage()]);
+    exit();
 }
-
 ?>

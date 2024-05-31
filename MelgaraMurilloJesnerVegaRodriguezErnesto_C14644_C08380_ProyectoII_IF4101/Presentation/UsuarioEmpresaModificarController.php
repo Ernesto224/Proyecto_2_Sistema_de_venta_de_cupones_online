@@ -2,44 +2,47 @@
 
 require_once '../Business/UsuarioEmpresaModificar.php';
 require_once '../Model/UsuarioEmpresa.php';
+
 header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: POST, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
 
-// Verificar si el método de la solicitud es POST
-if($_SERVER['REQUEST_METHOD'] == 'POST'){
-    // Decodificar los datos JSON enviados en la solicitud
-    $data = json_decode(file_get_contents("php://input"), true);
+// Manejar las solicitudes OPTIONS (Preflight request)
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
 
-    // Verificar si el método en los datos es "PUT"
-    if($data['METHOD'] == 'PUT'){
-        // Crear una instancia del negocio UsuarioEmpresaModificar
-        $usuarioEmpresaModificar = new UsuarioEmpresaModificar();
+$usuarioEmpresaModificar = new UsuarioEmpresaModificar();
+
+try {
+    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['METHOD']) && $_POST['METHOD'] == 'PUT') {
+        unset($_POST['METHOD']);
         
-        // Obtener la nueva contraseña y el ID del usuario de los datos
-        $nuevaContrasenia = $data['nuevaContrasenia'];
-        $idUsuario = $data['idUsuario'];
+        if (isset($_POST['nuevaContrasenia']) && isset($_GET['idUsuario'])) {
+            $nuevaContrasenia = $_POST['nuevaContrasenia'];
+            $idUsuario = $_GET['idUsuario'];
 
-        // Llamar al método cambiarContrasenia del negocio para cambiar la contraseña
-        $cambioExitoso = $usuarioEmpresaModificar->cambiarContrasenia($nuevaContrasenia, $idUsuario);
+            $cambioExitoso = $usuarioEmpresaModificar->cambiarContrasenia($nuevaContrasenia, $idUsuario);
 
-        // Verificar si el cambio fue exitoso
-        if($cambioExitoso){
-            // Enviar una respuesta JSON de éxito
-            echo json_encode(['message' => 'Contraseña cambiada con éxito']);
-            header("HTTP/1.1 200 OK");
+            if ($cambioExitoso) {
+                echo json_encode(['message' => 'Contraseña cambiada con éxito']);
+                header("HTTP/1.1 200 OK");
+            } else {
+                echo json_encode(['message' => 'Error al cambiar la contraseña']);
+                header("HTTP/1.1 500 Internal Server Error");
+            }
         } else {
-            // Enviar una respuesta JSON de error
-            echo json_encode(['message' => 'Error al cambiar la contraseña']);
-            header("HTTP/1.1 500 Internal Server Error");
+            echo json_encode(['message' => 'Faltan datos para cambiar la contraseña']);
+            header("HTTP/1.1 400 Bad Request");
         }
     } else {
-        // Enviar una respuesta JSON de error si el método no es "PUT"
         echo json_encode(['message' => 'Método no permitido']);
         header("HTTP/1.1 405 Method Not Allowed");
     }
-} else {
-    // Enviar una respuesta JSON de error si el método no es POST
-    echo json_encode(['message' => 'Método no permitido']);
-    header("HTTP/1.1 405 Method Not Allowed");
+} catch (Exception $e) {
+    http_response_code(500);
+    echo json_encode(['error' => 'Error: ' . $e->getMessage()]);
+    exit();
 }
-
 ?>

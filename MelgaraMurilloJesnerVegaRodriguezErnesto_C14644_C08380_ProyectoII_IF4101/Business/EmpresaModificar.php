@@ -12,7 +12,6 @@ class EmpresaModificar {
         try {
             return $this->empresaModificarData->registrarEmpresa($empresa);
         } catch (Exception $e) {
-            // Aquí puedes lanzar una excepción personalizada o manejar el error de manera adecuada
             throw new Exception("Error al registrar la empresa: " . $e->getMessage());
         }
     }
@@ -21,7 +20,6 @@ class EmpresaModificar {
         try {
             return $this->empresaModificarData->actualizarEmpresa($empresa);
         } catch (Exception $e) {
-            // Aquí puedes lanzar una excepción personalizada o manejar el error de manera adecuada
             throw new Exception("Error al actualizar la empresa: " . $e->getMessage());
         }
     }
@@ -30,7 +28,6 @@ class EmpresaModificar {
         try {
             return $this->empresaModificarData->eliminarEmpresa($id);
         } catch (Exception $e) {
-            // Aquí puedes lanzar una excepción personalizada o manejar el error de manera adecuada
             throw new Exception("Error al eliminar la empresa: " . $e->getMessage());
         }
     }

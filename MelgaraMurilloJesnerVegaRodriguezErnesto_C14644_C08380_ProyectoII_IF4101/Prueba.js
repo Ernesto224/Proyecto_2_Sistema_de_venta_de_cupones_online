@@ -1,4 +1,4 @@
-const urlBase = 'http://localhost/MelgaraMurilloJesnerVegaRodriguezErnesto_C14644_C08380_ProyectoII_IF4101/Presentation';
+const urlBase = 'http://127.0.0.1/MelgaraMurilloJesnerVegaRodriguezErnesto_C14644_C08380_ProyectoII_IF4101/Presentation';
 
 const obtenerCuponPorId = async (id) => {
     try {
