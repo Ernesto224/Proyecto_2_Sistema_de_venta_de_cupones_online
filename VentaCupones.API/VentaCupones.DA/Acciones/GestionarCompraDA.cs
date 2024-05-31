@@ -26,13 +26,13 @@ namespace VentaCupones.DA.Acciones
             //include para optener todos los detalles asociados a una compra
             var compras = await contextoVentaCupones.compras
               .Include(compra => compra.DetallesCompras)
-              .Where(compra => compra.IDUsuarioCliente == idUsuarioCliente)
+              .Where(compra => compra.IDCliente == idUsuarioCliente)
               .Select(compraDA => new Compra(){
                   IDCompra = compraDA.IDCompra,
-                  IDUsuarioCliente = compraDA.IDUsuarioCliente,
-                  FechaCompra = compraDA.FechaCompra,
+                  IDCliente = compraDA.IDCliente,
+                  FechaDeCompra = compraDA.FechaDeCompra,
                   PrecioTotal = compraDA.PrecioTotal,
-                  NombreTarjetahabiente = compraDA.NombreTarjetahabiente,
+                  NombreTarjetaHabiente = compraDA.NombreTarjetaHabiente,
                   PAN = compraDA.PAN,
                   DetallesCompras = compraDA.DetallesCompras.Select(detalleDA => new DetalleCompra
                   {
@@ -51,10 +51,10 @@ namespace VentaCupones.DA.Acciones
         {
             //se crea un objeto compra para ser ingresado en la base de datos
            var compraDA = new CompraDA(){
-               IDUsuarioCliente = compraNueva.IDUsuarioCliente,
-               FechaCompra = compraNueva.FechaCompra,
+               IDCliente = compraNueva.IDCliente,
+               FechaDeCompra = compraNueva.FechaDeCompra,
                PrecioTotal = compraNueva.PrecioTotal,
-               NombreTarjetahabiente = compraNueva.NombreTarjetahabiente,
+               NombreTarjetaHabiente = compraNueva.NombreTarjetaHabiente,
                PAN = compraNueva.PAN,
            };
 

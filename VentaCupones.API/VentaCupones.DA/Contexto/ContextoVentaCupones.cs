@@ -24,7 +24,7 @@ namespace VentaCupones.DA.Contexto
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<UsuarioClienteDA>()
-            .HasKey(u => u.IDUsuarioCliente);
+            .HasKey(u => u.IDCliente);
 
             modelBuilder.Entity<CompraDA>()
             .HasMany(c => c.DetallesCompras)

@@ -9,7 +9,7 @@ namespace VentaCuponesSQLServer.API.Utilitarios
         {
             return new UsuarioClienteDTO
             {
-                IDUsuarioCliente = usuarioCliente.IDUsuarioCliente,
+                IDCliente = usuarioCliente.IDCliente,
                 Nombre = usuarioCliente.Nombre,
                 Apellidos = usuarioCliente.Apellidos,
                 FechaDeNacimiento = usuarioCliente.FechaDeNacimiento,

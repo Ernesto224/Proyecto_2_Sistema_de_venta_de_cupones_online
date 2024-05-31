@@ -9,7 +9,7 @@ namespace VentaCupones.API.Utilitarios
             return new CompraDTO
             {
                 IDCompra = compra.IDCompra,
-                FechaCompra = compra.FechaCompra,
+                FechaDeCompra = compra.FechaDeCompra,
                 PrecioTotal = compra.PrecioTotal,
                 DetallesCompras = compra.DetallesCompras.Select(d => DetallesMapper.MapToDTO(d)).ToList()
             };
@@ -19,10 +19,10 @@ namespace VentaCupones.API.Utilitarios
         {
             return new Compra
             {
-                IDUsuarioCliente = compraDTO.IDUsuarioCliente,
-                FechaCompra = compraDTO.FechaCompra,
+                IDCliente = compraDTO.IDCliente,
+                FechaDeCompra = compraDTO.FechaDeCompra,
                 PrecioTotal = compraDTO.PrecioTotal,
-                NombreTarjetahabiente = compraDTO.NombreTarjetahabiente,
+                NombreTarjetaHabiente = compraDTO.NombreTarjetaHabiente,
                 PAN = compraDTO.PAN,
             };
         }

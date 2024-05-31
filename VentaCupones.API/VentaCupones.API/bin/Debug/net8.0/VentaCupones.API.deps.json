@@ -580,6 +580,10 @@
         }
       },
       "VentaCupones.SG/1.0.0": {
+        "dependencies": {
+          "VentaCupones.BC": "1.0.0",
+          "VentaCupones.BW": "1.0.0"
+        },
         "runtime": {
           "VentaCupones.SG.dll": {}
         }

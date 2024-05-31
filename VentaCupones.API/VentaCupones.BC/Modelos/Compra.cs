@@ -13,13 +13,13 @@ namespace VentaCupones.DA.Entidades
     {
         public int IDCompra { get; set; }
 
-        public int IDUsuarioCliente { get; set; }
+        public int IDCliente { get; set; }
 
-        public DateTime FechaCompra { get; set; }
+        public DateTime FechaDeCompra { get; set; }
 
         public decimal PrecioTotal { get; set; }
 
-        public string NombreTarjetahabiente { get; set; }
+        public string NombreTarjetaHabiente { get; set; }
 
         public string PAN { get; set; }
 

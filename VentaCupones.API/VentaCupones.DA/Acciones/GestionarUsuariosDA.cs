@@ -35,7 +35,7 @@ namespace VentaCupones.DA.Acciones
 
             //si existe se retorna la informacion
             return new UsuarioCliente() {
-                IDUsuarioCliente = usuarioDA.IDUsuarioCliente,
+                IDCliente = usuarioDA.IDCliente,
                 Nombre = usuarioDA.Nombre,
                 Apellidos = usuarioDA.Apellidos,
                 CedulaDeIdentidad = usuarioDA.CedulaDeIdentidad,

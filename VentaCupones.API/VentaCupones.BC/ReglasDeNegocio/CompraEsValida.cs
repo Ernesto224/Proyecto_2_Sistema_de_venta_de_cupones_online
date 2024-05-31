@@ -24,7 +24,7 @@ namespace VentaCupones.BC.ReglasDeNegocio
         public static bool ValidarCompra(Compra compra)
         {
             // Verifica todos los elementos necesarios de la compra
-            return ValidarID(compra.IDUsuarioCliente) &&
+            return ValidarID(compra.IDCliente) &&
                 ValidarPrecio(compra.PrecioTotal);
         }
     }

@@ -14,7 +14,7 @@ namespace VentaCupones.DA.Entidades
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int IDUsuarioCliente { get; set; }
+        public int IDCliente { get; set; }
 
         [Required]
         public string Nombre { get; set; }

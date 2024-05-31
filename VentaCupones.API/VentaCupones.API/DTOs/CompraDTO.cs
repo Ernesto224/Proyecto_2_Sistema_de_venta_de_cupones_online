@@ -13,7 +13,7 @@ namespace VentaCupones.DA.Entidades
     {
         public int IDCompra { get; set; }
 
-        public DateTime FechaCompra { get; set; }
+        public DateTime FechaDeCompra { get; set; }
 
         public decimal PrecioTotal { get; set; }
 

@@ -11,7 +11,7 @@ namespace VentaCupones.BC.Modelos
 {
     public class UsuarioClienteDTO
     {
-        public int IDUsuarioCliente { get; set; }
+        public int IDCliente { get; set; }
 
         public string Nombre { get; set; }
 
