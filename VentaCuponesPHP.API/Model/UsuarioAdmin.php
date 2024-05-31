@@ -1,12 +1,12 @@
 <?php
 
 class UsuarioAdmin {
-    public $IDUsuarioAdmin;
+    public $IDAdmin;
     public $NombreUsuario;
     public $Contrasenia;
 
-    public function __construct($IDUsuarioAdmin, $NombreUsuario, $Contrasenia) {
-        $this->IDUsuarioAdmin = $IDUsuarioAdmin;
+    public function __construct($IDAdmin, $NombreUsuario, $Contrasenia) {
+        $this->IDAdmin = $IDAdmin;
         $this->NombreUsuario = $NombreUsuario;
         $this->Contrasenia = $Contrasenia;
     }

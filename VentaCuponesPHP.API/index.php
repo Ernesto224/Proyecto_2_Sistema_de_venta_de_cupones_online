@@ -44,16 +44,6 @@ switch ($requestUri) {
         $usuarioAdminModificarController = new UsuarioAdminModificarController();
         $usuarioAdminModificarController->handleRequest();
         break;
-    case '/usuario/empresa':
-        require_once $controllerPath . 'UsuarioEmpresaLecturaController.php';
-        $usuarioEmpresaLecturaController = new UsuarioEmpresaLecturaController();
-        $usuarioEmpresaLecturaController->handleRequest();
-        break;
-    case '/usuario/empresa/modificar':
-        require_once $controllerPath . 'UsuarioEmpresaModificarController.php';
-        $usuarioEmpresaModificarController = new UsuarioEmpresaModificarController();
-        $usuarioEmpresaModificarController->handleRequest();
-        break;
     default:
         // Si la ruta no coincide con ninguna de las anteriores, devolver un error 404
         http_response_code(404);

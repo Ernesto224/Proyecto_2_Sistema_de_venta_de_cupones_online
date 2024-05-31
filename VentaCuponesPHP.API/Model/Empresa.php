@@ -8,10 +8,15 @@ class Empresa {
     public $FechaCreacion;
     public $CorreoElectronico;
     public $Telefono;
+    public $NombreUsuario;
     public $Contrasenia;
     public $Habilitado;
 
-    public function __construct($IDEmpresa, $NombreEmpresa, $DireccionFisica, $CedulaFisicaJuridica, $FechaCreacion, $CorreoElectronico, $Telefono, $Contrasenia, $Habilitado) {
+    public function __construct($IDEmpresa, $NombreEmpresa, 
+    $DireccionFisica, $CedulaFisicaJuridica, $FechaCreacion, 
+    $CorreoElectronico, $Telefono, $NombreUsuario, $Contrasenia, 
+    $Habilitado) 
+    {
         $this->IDEmpresa = $IDEmpresa;
         $this->NombreEmpresa = $NombreEmpresa;
         $this->DireccionFisica = $DireccionFisica;
@@ -19,6 +24,7 @@ class Empresa {
         $this->FechaCreacion = $FechaCreacion;
         $this->CorreoElectronico = $CorreoElectronico;
         $this->Telefono = $Telefono;
+        $this->NombreUsuario = $NombreUsuario;
         $this->Contrasenia = $Contrasenia;
         $this->Habilitado = $Habilitado;
     }

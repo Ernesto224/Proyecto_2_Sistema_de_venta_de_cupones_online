@@ -3,10 +3,10 @@ require_once "../Model/Empresa.php";
 
 class EmpresaLecturaData {
     private $pdo;
-    private $host = "localhost:3306";
+    private $host = "localhost:3307";
     private $user = "root";
     private $password = "";
-    private $bd = "phpmyadmin";
+    private $bd = "tarea3_lenguajes_php";
 
     private function conectar() {
         try {
