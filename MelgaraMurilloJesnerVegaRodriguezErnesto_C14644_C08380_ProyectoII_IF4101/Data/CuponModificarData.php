@@ -41,7 +41,6 @@ class CuponModificarData {
             $sentencia->bindParam(':PrecioCuponVenta', $cupon->PrecioCuponVenta);
             $sentencia->bindParam(':FechaVencimientoOferta', $cupon->FechaVencimientoOferta);
             $sentencia->bindParam(':IDEmpresa', $cupon->IDEmpresa);
-            $sentencia->bindParam(':IDCategoria', $cupon->IDCategoria);
             $sentencia->bindParam(':Habilitado', $cupon->Habilitado);
             $sentencia->bindParam(':EnPromocion', $cupon->EnPromocion);  // <-- Punto y coma añadido aquí
             $sentencia->execute();
@@ -91,9 +90,9 @@ class CuponModificarData {
     public function eliminarCupon($id) {
         try {
             $this->conectar();
-            $query = "DELETE FROM Cupon WHERE IDCupon = :IDCupon";
+            $query = "UPDATE Cupon SET Habilitado = 0 WHERE IDCupon = :id";
             $sentencia = $this->pdo->prepare($query);
-            $sentencia->bindParam(':IDCupon', $id, PDO::PARAM_INT);
+            $sentencia->bindParam(':id', $id, PDO::PARAM_INT);
             $sentencia->execute();
             $sentencia->closeCursor();
             $this->desconectar();
