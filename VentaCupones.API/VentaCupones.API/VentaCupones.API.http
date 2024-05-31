@@ -1,0 +1,6 @@
+@VentaCupones.API_HostAddress = http://localhost:5096
+
+GET {{VentaCupones.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
