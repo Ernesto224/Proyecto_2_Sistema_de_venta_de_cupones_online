@@ -13,6 +13,27 @@
     <h2>Cupones</h2>
     <button onclick="obtenerCuponPorId(1)">Obtener Cupón Por ID</button>
     <button onclick="obtenerTodosLosCupones()">Obtener Todos los Cupones</button>
+    <button onclick="crearCupon({
+        Nombre: 'Actulizado',
+        Imagen: 'imagen.jpg',
+        Ubicacion: 'Lugar XYZ',
+        PrecioCupon: 100,
+        IDEmpresa: 1,
+        IDCategoria: 1,
+        Habilitado: 1
+    })">Crear Cupon</button>
+    <button onclick="actualizarCupon({
+        IDCupon: 1, // ID del cupón que deseas actualizar
+        Nombre: 'Actulizado',
+        Imagen: 'imagen.jpg',
+        Ubicacion: 'Lugar XYZ',
+        PrecioCupon: 100,
+        IDEmpresa: 1,
+        IDCategoria: 1,
+        Habilitado: 1
+    })">Actualizar Cupon</button>
+    <button onclick="eliminarCupon(1)">Eliminar Cupon</button>
+
     <h2>Empresas</h2>
     <button onclick="obtenerEmpresaPorId(1)">Obtener Empresa Por ID</button>
     <button onclick="obtenerTodasLasEmpresas()">Obtener Todas las Empresas</button>

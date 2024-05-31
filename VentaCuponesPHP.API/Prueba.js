@@ -1,4 +1,4 @@
-const urlBase = 'http://localhost/MelgaraMurilloJesnerVegaRodriguezErnesto_C14644_C08380_ProyectoII_IF4101/Presentation';
+const urlBase = 'http://localhost/VentaCuponesPHP.API/Presentation';
 
 const obtenerCuponPorId = async (id) => {
     try {
@@ -127,8 +127,85 @@ const empresaData = {
 const idEmpresaActualizar = 1; // ID de la empresa que deseas actualizar
 const idEmpresaEliminar = 2; // ID de la empresa que deseas eliminar
 
-obtenerEmpresaPorId(1);
-obtenerTodasLasEmpresas();
-crearEmpresa(empresaData);
-actualizarEmpresa({ ...empresaData, IDEmpresa: idEmpresaActualizar });
-eliminarEmpresa(idEmpresaEliminar);
+const urlBase1 = 'http://localhost/VentaCuponesPHP.API/Presentation';
+
+// Funciones para Cupones
+const crearCupon = async (cuponData) => {
+    try {
+        const response = await fetch(`${urlBase1}/CuponModificarController.php`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ ...cuponData, METHOD: 'POST' })
+        });
+        if (!response.ok) {
+            throw new Error('Hubo un problema al crear el cupón: ' + response.statusText);
+        }
+        const nuevoCupon = await response.json();
+        console.log('Cupon creado:', nuevoCupon);
+    } catch (error) {
+        console.error('Error al crear el cupón:', error);
+    }
+}
+
+const actualizarCupon = async (cuponData) => {
+    try {
+        const response = await fetch(`${urlBase1}/CuponModificarController.php`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ ...cuponData, METHOD: 'PUT' })
+        });
+        if (!response.ok) {
+            throw new Error('Hubo un problema al actualizar el cupón: ' + response.statusText);
+        }
+        const cuponActualizado = await response.json();
+        console.log('Cupon actualizado:', cuponActualizado);
+    } catch (error) {
+        console.error('Error al actualizar el cupón:', error);
+    }
+}
+
+const eliminarCupon = async (id) => {
+    try {
+        const response = await fetch(`${urlBase1}/CuponModificarController.php`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ METHOD: 'DELETE', IDCupon: id })
+        });
+        if (!response.ok) {
+            throw new Error('Hubo un problema al eliminar el cupón: ' + response.statusText);
+        }
+        const mensaje = await response.json();
+        console.log('Mensaje del servidor:', mensaje);
+    } catch (error) {
+        console.error('Error al eliminar el cupón:', error);
+    }
+}
+
+// Ejemplo de cómo llamar a las funciones
+const cuponData = {
+    Nombre: 'Nuevo Cupon',
+    Imagen: 'imagen.jpg',
+    Ubicacion: 'Lugar XYZ',
+    PrecioCupon: 100,
+    IDEmpresa: 1,
+    IDCategoria: 1,
+    Habilitado: 1
+};
+
+const cuponDataActualizar = {
+    IDCupon: 1, // ID del cupón que deseas actualizar
+    Nombre: 'Actulizado',
+    Imagen: 'imagen.jpg',
+    Ubicacion: 'Lugar XYZ',
+    PrecioCupon: 100,
+    IDEmpresa: 1,
+    IDCategoria: 1,
+    Habilitado: 1
+};
+

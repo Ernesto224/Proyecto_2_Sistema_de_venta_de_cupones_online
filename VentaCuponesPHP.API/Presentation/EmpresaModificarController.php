@@ -27,7 +27,8 @@ try {
                 $data['CorreoElectronico'],
                 $data['Telefono'],
                 $data['Contrasenia'],
-                $data['Habilitado']
+                $data['Habilitado'],
+                $data['CredencialesTemporales']
             );
             $id = $empresaModificar->registrarEmpresa($empresa);
             echo json_encode(['IDEmpresa' => $id]);
@@ -45,7 +46,8 @@ try {
                 $data['CorreoElectronico'],
                 $data['Telefono'],
                 $data['Contrasenia'],
-                $data['Habilitado']
+                $data['Habilitado'],
+                $data['CredencialesTemporales']
             );
             $empresaModificar->actualizarEmpresa($empresa);
             echo json_encode(['message' => 'Empresa actualizada']);

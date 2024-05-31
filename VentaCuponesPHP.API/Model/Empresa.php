@@ -11,11 +11,12 @@ class Empresa {
     public $NombreUsuario;
     public $Contrasenia;
     public $Habilitado;
+    public $CredencialesTemporales;
 
     public function __construct($IDEmpresa, $NombreEmpresa, 
     $DireccionFisica, $CedulaFisicaJuridica, $FechaCreacion, 
     $CorreoElectronico, $Telefono, $NombreUsuario, $Contrasenia, 
-    $Habilitado) 
+    $Habilitado, $CredencialesTemporales) 
     {
         $this->IDEmpresa = $IDEmpresa;
         $this->NombreEmpresa = $NombreEmpresa;
@@ -27,6 +28,7 @@ class Empresa {
         $this->NombreUsuario = $NombreUsuario;
         $this->Contrasenia = $Contrasenia;
         $this->Habilitado = $Habilitado;
+        $this->CredencialesTemporales = $CredencialesTemporales;
     }
 
     public function toJSON() {

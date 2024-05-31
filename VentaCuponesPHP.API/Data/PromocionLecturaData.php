@@ -1,7 +1,8 @@
 <?php
-require_once "../Model/Cupon.php";
+require_once "../Model/Promocion.php";
 
-class CuponLecturaData {
+class PromocionLecturaData{
+
     private $pdo;
     private $host = "localhost:3307";
     private $user = "root";
@@ -20,39 +21,19 @@ class CuponLecturaData {
     private function desconectar() {
         $this->pdo = null;
     }
-    
-    function obtenerCuponPorId($id) {
-        try {
-            $this->conectar();
-            $query = "SELECT * FROM Cupon WHERE IDCupon = :id";
-            $sentencia = $this->pdo->prepare($query);
-            $sentencia->bindParam(':id', $id, PDO::PARAM_INT);
-            $sentencia->setFetchMode(PDO::FETCH_ASSOC);
-            $sentencia->execute();
-            $resultado = $sentencia->fetch();
-            $this->desconectar();
-            if (!$resultado) {
-                throw new Exception("Cupón no encontrado");
-            }
-            return $resultado;
-        } catch (Exception $e) {
-            $this->desconectar();
-            echo json_encode(['error' => "Error: " . $e->getMessage()]);
-            die();
-        }
-    }
 
-    function obtenerTodosLosCupones() {
+    function obtenerTodasLasPromocionesPorEmpresa($idEmpresa) {
         try {
             $this->conectar();
-            $query = "SELECT * FROM Cupon";
+            $query = "SELECT * FROM promocion WHERE IDEmpresa = :idEmpresa";
             $sentencia = $this->pdo->prepare($query);
+            $sentencia->bindParam(':idEmpresa', $idEmpresa, PDO::PARAM_INT);
             $sentencia->setFetchMode(PDO::FETCH_ASSOC);
             $sentencia->execute();
             $resultado = $sentencia->fetchAll();
             $this->desconectar();
             if (!$resultado) {
-                throw new Exception("No se encontraron cupones");
+                throw new Exception("No se encontraron promociones");
             }
             return $resultado;
         } catch (Exception $e) {
