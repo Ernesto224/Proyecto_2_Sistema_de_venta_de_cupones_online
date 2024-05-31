@@ -1,0 +1,30 @@
+<?php
+
+require_once '../Business/EmpresaLectura.php';
+require_once '../Model/Empresa.php';
+
+header('Access-Control-Allow-Origin: *');
+header('Content-Type: application/json');
+
+$empresaLectura = new EmpresaLectura();
+
+if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+    if (isset($_GET['id'])) {
+        $empresa = $empresaLectura->obtenerEmpresaPorId($_GET['id']);
+        if ($empresa) {
+            echo json_encode($empresa);
+        } else {
+            http_response_code(404);
+            echo json_encode(['error' => 'Empresa no encontrada']);
+        }
+    } else {
+        $empresas = $empresaLectura->obtenerTodasLasEmpresas();
+        echo json_encode($empresas);
+    }
+    http_response_code(200);
+    exit();
+}
+
+http_response_code(400);
+echo json_encode(['error' => 'Método no permitido']);
+?>
