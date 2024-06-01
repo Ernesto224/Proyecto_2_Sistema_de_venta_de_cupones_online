@@ -1,12 +1,13 @@
 <?php
-require_once "../Model/Empresa.php";
+require_once "../Model/CategoriaCupon.php";
 
-class EmpresaLecturaData {
+class CategoriaCuponLecturaData {
+
     private $pdo;
     private $host = "localhost:3306";
     private $user = "root";
     private $password = "";
-    private $bd = "phpmyadmin";
+    private $bd = "tarea3_lenguajes_php";
 
     private function conectar() {
         try {
@@ -21,35 +22,46 @@ class EmpresaLecturaData {
         $this->pdo = null;
     }
 
-    public function obtenerEmpresaPorId($id): ?array {
+    function obtenerCategoriaPorId($id) {
         try {
             $this->conectar();
-            $query = "SELECT * FROM Empresa WHERE IDEmpresa = :id";
+            $query = "SELECT * FROM CategoriaCupon WHERE IDCategoria = :id";
             $sentencia = $this->pdo->prepare($query);
             $sentencia->bindParam(':id', $id, PDO::PARAM_INT);
             $sentencia->setFetchMode(PDO::FETCH_ASSOC);
             $sentencia->execute();
             $resultado = $sentencia->fetch();
             $this->desconectar();
+            if (!$resultado) {
+                throw new Exception("Categoria no encontrada");
+            }
             return $resultado;
         } catch (Exception $e) {
-            die(json_encode(['error' => "Error: " . $e->getMessage()]));
+            $this->desconectar();
+            echo json_encode(['error' => "Error: " . $e->getMessage()]);
+            die();
         }
     }
 
-    public function obtenerTodasLasEmpresas(): ?array {
+    function obtenerTodasLasCategorias() {
         try {
             $this->conectar();
-            $query = "SELECT * FROM Empresa";
+            $query = "SELECT * FROM categoriacupon";
             $sentencia = $this->pdo->prepare($query);
             $sentencia->setFetchMode(PDO::FETCH_ASSOC);
             $sentencia->execute();
             $resultado = $sentencia->fetchAll();
             $this->desconectar();
+            if (!$resultado) {
+                throw new Exception("No se encontraron categorias");
+            }
             return $resultado;
         } catch (Exception $e) {
-            die(json_encode(['error' => "Error: " . $e->getMessage()]));
+            $this->desconectar();
+            echo json_encode(['error' => "Error: " . $e->getMessage()]);
+            die();
         }
     }
-}
+
+} 
 ?>

@@ -20,8 +20,10 @@ class EmpresaLectura {
                     $empresaData['FechaCreacion'],
                     $empresaData['CorreoElectronico'],
                     $empresaData['Telefono'],
+                    $empresaData['NombreUsuario'],
                     $empresaData['Contrasenia'],
-                    $empresaData['Habilitado']
+                    $empresaData['Habilitado'],
+                    $empresaData['CredencialesTemporales']
                 );
             }
             return null;
@@ -43,8 +45,10 @@ class EmpresaLectura {
                     $empresaData['FechaCreacion'],
                     $empresaData['CorreoElectronico'],
                     $empresaData['Telefono'],
+                    $empresaData['NombreUsuario'],
                     $empresaData['Contrasenia'],
-                    $empresaData['Habilitado']
+                    $empresaData['Habilitado'],
+                    $empresaData['CredencialesTemporales']
                 );
             }
             return $empresas;

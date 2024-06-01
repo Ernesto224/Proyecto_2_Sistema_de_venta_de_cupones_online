@@ -18,12 +18,10 @@ class CuponLectura {
                     $cuponData['Nombre'],
                     $cuponData['Imagen'],
                     $cuponData['Ubicacion'],
-                    $cuponData['PrecioCuponBase'],
-                    $cuponData['PrecioCuponVenta'],
-                    $cuponData['FechaVencimientoOferta'],
+                    $cuponData['PrecioCupon'],
                     $cuponData['IDEmpresa'],
-                    $cuponData['Habilitado'],
-                    $cuponData['EnPromocion']
+                    $cuponData['IDCategoria'],
+                    $cuponData['Habilitado']
                 );
             }
             return null;
@@ -42,12 +40,10 @@ class CuponLectura {
                     $cuponData['Nombre'],
                     $cuponData['Imagen'],
                     $cuponData['Ubicacion'],
-                    $cuponData['PrecioCuponBase'],
-                    $cuponData['PrecioCuponVenta'],
-                    $cuponData['FechaVencimientoOferta'],
+                    $cuponData['PrecioCupon'],
                     $cuponData['IDEmpresa'],
-                    $cuponData['Habilitado'],
-                    $cuponData['EnPromocion']
+                    $cuponData['IDCategoria'],
+                    $cuponData['Habilitado']
                 );
             }
             return $cupones;

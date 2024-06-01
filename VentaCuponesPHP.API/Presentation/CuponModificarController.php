@@ -1,64 +1,55 @@
 <?php
+
+header('Access-Control-Allow-Origin: *');
 require_once "../Business/CuponModificar.php";
 require_once "../Model/Cupon.php";
 
-class CuponModificarController
-{
-    private $cuponModificar;
+$cuponModificar = new CuponModificar();
 
-    public function __construct()
-    {
-        $this->cuponModificar = new CuponModificar();
-    }
+if ($_POST['METHOD'] == 'POST') {
 
-    public function handleRequest()
-    {
-        $data = json_decode(file_get_contents("php://input"), true);
+        $cupon = new Cupon(
+            null,
+            $_POST['Nombre'],
+            $_POST['Imagen'],
+            $_POST['Ubicacion'],
+            $_POST['PrecioCupon'],
+            $_POST['IDEmpresa'],
+            $_POST['IDCategoria'],
+            $_POST['Habilitado']
+        );
+        $id = $cuponModificar->registrarCupon($cupon);
+        echo json_encode(['IDCupon' => $id]);
+        http_response_code(200);
 
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            if ($data['METHOD'] == 'POST') {
-                $cupon = new Cupon(
-                    null,
-                    $data['Nombre'],
-                    $data['Imagen'],
-                    $data['Ubicacion'],
-                    $data['PrecioCuponBase'],
-                    $data['PrecioCuponVenta'],
-                    $data['FechaVencimientoOferta'],
-                    $data['IDEmpresa'],
-                    $data['Habilitado']
-                );
-                $id = $this->cuponModificar->registrarCupon($cupon);
-                echo json_encode(['IDCupon' => $id]);
-                exit();
-            }
-
-            if ($data['METHOD'] == 'PUT') {
-                $cupon = new Cupon(
-                    $data['IDCupon'],
-                    $data['Nombre'],
-                    $data['Imagen'],
-                    $data['Ubicacion'],
-                    $data['PrecioCuponBase'],
-                    $data['PrecioCuponVenta'],
-                    $data['FechaVencimientoOferta'],
-                    $data['IDEmpresa'],
-                    $data['Habilitado'],
-                    $data['EnPromocion']
-                );
-                $this->cuponModificar->actualizarCupon($cupon);
-                echo json_encode(['message' => 'Cupon actualizado']);
-                exit();
-            }
-
-            if ($data['METHOD'] == 'DELETE') {
-                $this->cuponModificar->eliminarCupon($data['IDCupon']);
-                echo json_encode(['message' => 'Cupon eliminado']);
-                exit();
-            }
-        }
-
-        header("HTTP/1.1 400 Bad Request");
-    }
+    exit();
 }
+
+if ($_POST['METHOD'] == 'PUT') {
+        $cupon = new Cupon(
+            $_POST['IDCupon'],
+            $_POST['Nombre'],
+            $_POST['Imagen'],
+            $_POST['Ubicacion'],
+            $_POST['PrecioCupon'],
+            $_POST['IDEmpresa'],
+            $_POST['IDCategoria'],
+            $_POST['Habilitado']
+        );
+        $cuponModificar->actualizarCupon($cupon);
+        echo json_encode(['message' => 'Cupon actualizado']);
+        http_response_code(200);
+    exit();
+}
+
+if ($_POST['METHOD'] == 'DELETE') {
+        $cuponModificar->eliminarCupon($_GET['IDCupon']);
+        echo json_encode(['message' => 'Cupon eliminado']);
+        http_response_code(200);
+
+    exit();
+}
+header("HTTP/1.1 400 Bad Request");
+echo json_encode(['Error' => 'Bad Request']);
+exit();
 ?>

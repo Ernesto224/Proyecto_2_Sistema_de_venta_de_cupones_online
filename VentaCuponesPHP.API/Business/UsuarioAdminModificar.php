@@ -31,5 +31,12 @@ class UsuarioAdminModificar {
             die("Error: " . $e->getMessage());
         }
     }
+    public function verificarInicioSesion($NombreUsuario, $Contrasenia){
+        try {
+            return $this->usuarioAdminModificarData->verificarInicioSesion($NombreUsuario, $Contrasenia);
+        } catch (Exception $e) {
+            die("Error: " . $e->getMessage());
+        }
+    }
 }
 ?>

@@ -111,6 +111,25 @@ class UsuarioAdminModificarData {
             die("Error: " . $e->getMessage());
         }
     }
+    public function verificarInicioSesion($NombreUsuario, $Contrasenia){
+        try {
+            $query = "SELECT 1 FROM UsuarioAdmin WHERE NombreUsuario = :NombreUsuario and Contrasenia = :Contrasenia";
+            $sentencia = $this->pdo->prepare($query); 
+            $sentencia->bindParam(':NombreUsuario', $NombreUsuario);
+            $sentencia->bindParam(':Contrasenia', $Contrasenia);
+            $sentencia->execute();
+            $resultado = $sentencia->fetch(PDO::FETCH_ASSOC); 
+            $sentencia->closeCursor();
+            if($resultado) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception $e) {
+            die("Error: " . $e->getMessage());
+        }
+    }
+    
 }
 
 ?>

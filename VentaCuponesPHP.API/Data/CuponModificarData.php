@@ -10,7 +10,7 @@ class CuponModificarData {
         $this->host = "localhost:3306";
         $this->user = "root";
         $this->password = "";
-        $this->bd = "phpmyadmin";
+        $this->bd = "tarea3_lenguajes_php";
     }
 
     private function conectar() {
@@ -31,19 +31,16 @@ class CuponModificarData {
     public function registrarCupon(Cupon $cupon) {
         try {
             $this->conectar();
-            $query = "INSERT INTO Cupon(Nombre, Imagen, Ubicacion, PrecioCuponBase, PrecioCuponVenta, FechaVencimientoOferta, IDEmpresa, IDCategoria, Habilitado, EnPromocion)
-                      VALUES(:Nombre, :Imagen, :Ubicacion, :PrecioCuponBase, :PrecioCuponVenta, :FechaVencimientoOferta, :IDEmpresa, :IDCategoria, :Habilitado, :EnPromocion)";
+            $query = "INSERT INTO Cupon(Nombre, Imagen, Ubicacion, PrecioCupon, IDEmpresa, IDCategoria, Habilitado)
+                      VALUES(:Nombre, :Imagen, :Ubicacion, :PrecioCupon, :IDEmpresa, :IDCategoria, :Habilitado)";
             $sentencia = $this->pdo->prepare($query);
             $sentencia->bindParam(':Nombre', $cupon->Nombre);
             $sentencia->bindParam(':Imagen', $cupon->Imagen);
             $sentencia->bindParam(':Ubicacion', $cupon->Ubicacion);
-            $sentencia->bindParam(':PrecioCuponBase', $cupon->PrecioCuponBase);
-            $sentencia->bindParam(':PrecioCuponVenta', $cupon->PrecioCuponVenta);
-            $sentencia->bindParam(':FechaVencimientoOferta', $cupon->FechaVencimientoOferta);
+            $sentencia->bindParam(':PrecioCupon', $cupon->PrecioCupon);
             $sentencia->bindParam(':IDEmpresa', $cupon->IDEmpresa);
             $sentencia->bindParam(':IDCategoria', $cupon->IDCategoria);
-            $sentencia->bindParam(':Habilitado', $cupon->Habilitado);
-            $sentencia->bindParam(':EnPromocion', $cupon->EnPromocion);  // <-- Punto y coma añadido aquí
+            $sentencia->bindParam(':Habilitado', $cupon->Habilitado);  // <-- Punto y coma añadido aquí
             $sentencia->execute();
             $idAutoIncrement = $this->pdo->lastInsertId();
             $sentencia->closeCursor();
@@ -60,25 +57,21 @@ class CuponModificarData {
             $query = "UPDATE Cupon SET 
                       Nombre = :Nombre, 
                       Imagen = :Imagen, 
-                      Ubicacion = :Ubicacion, 
-                      PrecioCuponBase = :PrecioCuponBase, 
-                      PrecioCuponVenta = :PrecioCuponVenta, 
-                      FechaVencimientoOferta = :FechaVencimientoOferta, 
-                      IDEmpresa = :IDEmpresa, 
-                      Habilitado = :Habilitado,
-                      EnPromocion = :EnPromocion
+                      Ubicacion = :Ubicacion,
+                      PrecioCupon = :PrecioCupon, 
+                      IDEmpresa = :IDEmpresa,
+                      IDCategoria = :IDCategoria,
+                      Habilitado = :Habilitado
                       WHERE IDCupon = :IDCupon";
             $sentencia = $this->pdo->prepare($query);
             $sentencia->bindParam(':Nombre', $cupon->Nombre);
             $sentencia->bindParam(':Imagen', $cupon->Imagen);
             $sentencia->bindParam(':Ubicacion', $cupon->Ubicacion);
-            $sentencia->bindParam(':PrecioCuponBase', $cupon->PrecioCuponBase);
-            $sentencia->bindParam(':PrecioCuponVenta', $cupon->PrecioCuponVenta);
-            $sentencia->bindParam(':FechaVencimientoOferta', $cupon->FechaVencimientoOferta);
+            $sentencia->bindParam(':PrecioCupon', $cupon->PrecioCupon);
             $sentencia->bindParam(':IDEmpresa', $cupon->IDEmpresa);
+            $sentencia-> bindParam(':IDCategoria', $cupon->IDCategoria);
             $sentencia->bindParam(':Habilitado', $cupon->Habilitado);
-            $sentencia->bindParam(':IDCupon', $cupon->IDCupon);
-            $sentencia->bindParam(':EnPromocion', $cupon->EnPromocion);  // <-- Punto y coma añadido aquí
+            $sentencia->bindParam(':IDCupon', $cupon->IDCupon);// <-- Punto y coma añadido aquí
             $sentencia->execute();
             $sentencia->closeCursor();
             $this->desconectar();
@@ -91,17 +84,18 @@ class CuponModificarData {
     public function eliminarCupon($id) {
         try {
             $this->conectar();
-            $query = "DELETE FROM Cupon WHERE IDCupon = :IDCupon";
+            $query = "UPDATE Cupon SET Habilitado = 0 WHERE IDCupon = :IDCupon";
             $sentencia = $this->pdo->prepare($query);
             $sentencia->bindParam(':IDCupon', $id, PDO::PARAM_INT);
             $sentencia->execute();
             $sentencia->closeCursor();
             $this->desconectar();
             return true;
-        } catch (Exception $e) {
-            die("Error: " . $e->getMessage());
+        } catch (PDOException $e) {
+            throw new Exception("Error al eliminar el cupón: " . $e->getMessage());
         }
     }
+    
 }
 
 ?>

@@ -3,7 +3,7 @@ $pdo = null;
 $host = "localhost:3306";
 $user = "root";
 $password = "";
-$bd = "phpmyadmin";
+$bd = "tarea3_lenguajes_php";
 
 require_once "../Model/Empresa.php";
 
@@ -24,8 +24,8 @@ class EmpresaModificarData {
     public function registrarEmpresa(Empresa $empresa) {
         try {
             conectar();
-            $query = "INSERT INTO Empresa (NombreEmpresa, DireccionFisica, CedulaFisicaJuridica, FechaCreacion, CorreoElectronico, Telefono, Contrasenia, Habilitado) 
-                      VALUES (:NombreEmpresa, :DireccionFisica, :CedulaFisicaJuridica, :FechaCreacion, :CorreoElectronico, :Telefono, :Contrasenia, :Habilitado)";
+            $query = "INSERT INTO Empresa (NombreEmpresa, DireccionFisica, CedulaFisicaJuridica, FechaCreacion, CorreoElectronico, Telefono, NombreUsuario, Contrasenia, Habilitado, CredencialesTemporales) 
+                      VALUES (:NombreEmpresa, :DireccionFisica, :CedulaFisicaJuridica, :FechaCreacion, :CorreoElectronico, :Telefono, :NombreUsuario, :Contrasenia, :Habilitado, :CredencialesTemporales)";
             $sentencia = $GLOBALS['pdo']->prepare($query);
             $sentencia->bindParam(':NombreEmpresa', $empresa->NombreEmpresa);
             $sentencia->bindParam(':DireccionFisica', $empresa->DireccionFisica);
@@ -33,8 +33,10 @@ class EmpresaModificarData {
             $sentencia->bindParam(':FechaCreacion', $empresa->FechaCreacion);
             $sentencia->bindParam(':CorreoElectronico', $empresa->CorreoElectronico);
             $sentencia->bindParam(':Telefono', $empresa->Telefono);
+            $sentencia->bindParam(':NombreUsuario', $empresa->NombreUsuario);
             $sentencia->bindParam(':Contrasenia', $empresa->Contrasenia);
             $sentencia->bindParam(':Habilitado', $empresa->Habilitado);
+            $sentencia->bindParam(':CredencialesTemporales', $empresa->CredencialesTemporales);
             $sentencia->execute();
             $idAutoIncrement = $GLOBALS['pdo']->lastInsertId();
             $sentencia->closeCursor();
@@ -44,7 +46,7 @@ class EmpresaModificarData {
             throw new Exception("Error al registrar la empresa: " . $e->getMessage());
         }
     }
-
+    
     public function actualizarEmpresa(Empresa $empresa) {
         try {
             conectar();
@@ -54,9 +56,11 @@ class EmpresaModificarData {
                       CedulaFisicaJuridica = :CedulaFisicaJuridica, 
                       FechaCreacion = :FechaCreacion, 
                       CorreoElectronico = :CorreoElectronico, 
-                      Telefono = :Telefono, 
+                      Telefono = :Telefono,
+                      NombreUsuario = :NombreUsuario,
                       Contrasenia = :Contrasenia, 
-                      Habilitado = :Habilitado 
+                      Habilitado = :Habilitado,
+                      CredencialesTemporales = :CredencialesTemporales
                       WHERE IDEmpresa = :IDEmpresa";
             $sentencia = $GLOBALS['pdo']->prepare($query);
             $sentencia->bindParam(':NombreEmpresa', $empresa->NombreEmpresa);
@@ -65,9 +69,11 @@ class EmpresaModificarData {
             $sentencia->bindParam(':FechaCreacion', $empresa->FechaCreacion);
             $sentencia->bindParam(':CorreoElectronico', $empresa->CorreoElectronico);
             $sentencia->bindParam(':Telefono', $empresa->Telefono);
+            $sentencia->bindParam(':NombreUsuario', $empresa->NombreUsuario);
             $sentencia->bindParam(':Contrasenia', $empresa->Contrasenia);
             $sentencia->bindParam(':Habilitado', $empresa->Habilitado);
             $sentencia->bindParam(':IDEmpresa', $empresa->IDEmpresa);
+            $sentencia->bindParam(':CredencialesTemporales', $empresa->CredencialesTemporales);
             $sentencia->execute();
             $sentencia->closeCursor();
             desconectar();
@@ -76,6 +82,7 @@ class EmpresaModificarData {
             throw new Exception("Error al actualizar la empresa: " . $e->getMessage());
         }
     }
+    
     public function eliminarEmpresa($id) {
         try {
             conectar();

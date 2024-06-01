@@ -5,7 +5,7 @@ class Cupon {
     public $Nombre;
     public $Imagen;
     public $Ubicacion;
-    public $PrecioCupon;
+    public $PrecioCupon; // Asegurarse de que este nombre coincida con la tabla
     public $IDEmpresa;
     public $IDCategoria;
     public $Habilitado;

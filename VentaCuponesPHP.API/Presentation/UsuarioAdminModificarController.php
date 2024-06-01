@@ -24,7 +24,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $data['CorreoElectronico'],
             $data['Telefono'],
             $data['Contrasenia'],
-            $data['Habilitado']
+            $data['Habilitado'],
+            $data['CredencialesTemporales']
         );
         $usuarioAdminModificar->actualizarInfoJuridicaEmpresa($empresa);
         echo json_encode(['message' => 'Información jurídica de la empresa actualizada']);
@@ -43,10 +44,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $data['FechaVencimientoOferta'],
             $data['IDEmpresa'],
             $data['Habilitado'],
-            $data['EnPromocion']
+            $data['EnPromocion'],
+            $data['CredencialesTemporales']
         );
         $usuarioAdminModificar->actualizarHabilitacionCupon($cupon);
         echo json_encode(['message' => 'Cupón actualizado']);
+        header("HTTP/1.1 200 OK");
+        exit();
+    }
+
+    if($data['METHOD']=='POST' && isset($data['NombreUsuario']) && isset($data['Contrasenia'])){
+        $respuesta = $this->usuarioAdminModificar->verificarInicioSesion($data['NombreUsuario'], $data['Contrasenia']);
+        echo json_decode($respuesta);
         header("HTTP/1.1 200 OK");
         exit();
     }

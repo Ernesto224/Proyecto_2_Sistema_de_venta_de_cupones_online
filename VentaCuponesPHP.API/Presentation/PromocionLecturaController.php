@@ -1,25 +1,22 @@
 <?php
-require_once '../Business/CuponLectura.php';
-require_once '../Model/CategoriaCupon.php';
+require_once '../Business/PromocionLectura.php';
+require_once '../Model/Promocion.php';
 
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 
-$cuponLectura = new CuponLectura();
+$promocionLectura = new PromocionLectura();
 
 try {
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         if (isset($_GET['id'])) {
-            $cupon = $cuponLectura->obtenerCuponPorId($_GET['id']);
-            if ($cupon) {
-                echo json_encode($cupon);
+            $promociones = $promocionLectura->obtenerTodasLasPromocionesPorEmpresa($_GET['id']);
+            if ($promociones) {
+                echo json_encode($promociones);
             } else {
                 http_response_code(404);
                 echo json_encode(['error' => 'Cupón no encontrado']);
             }
-        } else {
-            $cupones = $cuponLectura->obtenerTodosLosCupones();
-            echo json_encode($cupones);
         }
         http_response_code(200);
         exit();
