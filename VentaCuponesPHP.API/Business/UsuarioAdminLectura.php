@@ -1,24 +1,19 @@
 <?php
-   require_once "../Data/UsuarioAdminLecturaData.php";
-   class UsuarioAdminLectura{
-        private $usuarioAdminData;
-        public function __construct(){
-            $this-> usuarioAdminData = new UsuarioAdminLecturaData();
-        }
-        public function obtenerTodasLasEmpresas(): ?array {
-            try {
-                return $this->usuarioAdminData->obtenerTodasLasEmpresas();
-            } catch (Exception $e) {
-                die("Error: " . $e->getMessage());
-            }
-        }
-        function obtenerCuponesEmpresa($idEmpresa){
-            try {
-                return $this->usuarioAdminData->obtenerCuponesEmpresa($idEmpresa);
-            } catch (Exception $e) {
-                die("Error: " . $e->getMessage());
-            }
-        }
-   }
+require_once "../Data/UsuarioAdminLecturaData.php";
 
+class UsuarioAdminLectura{
+    private $usuarioAdminData;
+
+    public function __construct(){
+        $this-> usuarioAdminData = new UsuarioAdminLecturaData();
+    }
+    
+    public function verificarInicioSesion($NombreUsuario, $Contrasenia){
+        try {
+            return $this->usuarioAdminData->verificarInicioSesion($NombreUsuario, $Contrasenia);
+        } catch (Exception $e) {
+            die("Error: " . $e->getMessage());
+        }
+    }
+}
 ?>

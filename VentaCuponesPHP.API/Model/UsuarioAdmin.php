@@ -1,5 +1,4 @@
 <?php
-
 class UsuarioAdmin {
     public $IDAdmin;
     public $NombreUsuario;
@@ -15,5 +14,4 @@ class UsuarioAdmin {
         return json_encode(get_object_vars($this));
     }
 }
-
 ?>

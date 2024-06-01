@@ -1,5 +1,4 @@
 <?php
-
 class CategoriaCupon{
 
     public $IDCategoria;
@@ -18,5 +17,4 @@ class CategoriaCupon{
         return json_encode(get_object_vars($this));
     }
 }
-
 ?>

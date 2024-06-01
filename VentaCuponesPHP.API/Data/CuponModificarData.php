@@ -1,21 +1,12 @@
 <?php
-
 require_once "../Model/Cupon.php";
 
 class CuponModificarData {
     private $pdo;
-    private $host;
-    private $user;
-    private $password;
-    private $bd;
-    
-    public function __construct() {
-        $this->pdo = null;
-        $this->host = "localhost:3307";
-        $this->user = "root";
-        $this->password = "";
-        $this->bd = "tarea3_lenguajes_php";
-    }
+    private $host = "localhost:3307";
+    private $user = "root";
+    private $password = "";
+    private $bd = "tarea3_lenguajes_php";
 
     private function conectar() {
         try {
@@ -100,5 +91,4 @@ class CuponModificarData {
         }
     }
 }
-
 ?>

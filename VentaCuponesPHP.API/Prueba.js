@@ -26,7 +26,6 @@ const obtenerTodosLosCupones = async () => {
     }
 }
 
-
 // Funciones para Empresas
 const obtenerEmpresaPorId = async (id) => {
     try {
@@ -209,3 +208,57 @@ const cuponDataActualizar = {
     Habilitado: 1
 };
 
+// Función para hacer una solicitud POST
+function postCategoriaCupon(nombre, descripcion) {
+    fetch('http://localhost/VentaCuponesPHP.API/Presentation/CategoriaCuponModificarController.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            METHOD: 'POST',
+            Nombre: nombre,
+            Descripcion: descripcion
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error en la solicitud');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('ID del nuevo cupón:', data.IDCupon);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+// Función para hacer una solicitud PUT
+function putCategoriaCupon(idCategoria, nombre, descripcion) {
+    fetch('http://localhost/VentaCuponesPHP.API/Presentation/CategoriaCuponModificarController.php', {
+        method: 'POST', // Aunque estamos haciendo una solicitud PUT, el método debe ser POST por las limitaciones del formulario
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            METHOD: 'PUT',
+            IDCategoria: idCategoria,
+            Nombre: nombre,
+            Descripcion: descripcion
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error en la solicitud');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Mensaje:', data.message);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
