@@ -1,5 +1,6 @@
 <?php
 require_once "../Data/EmpresaLecturaData.php";
+require_once "../Model/Empresa.php";
 
 class EmpresaLectura {
     private $empresaLecturaData;
@@ -20,8 +21,10 @@ class EmpresaLectura {
                     $empresaData['FechaCreacion'],
                     $empresaData['CorreoElectronico'],
                     $empresaData['Telefono'],
+                    $empresaData['NombreUsuario'],
                     $empresaData['Contrasenia'],
-                    $empresaData['Habilitado']
+                    $empresaData['Habilitado'],
+                    $empresaData['CredencialesTemporales']
                 );
             }
             return null;
@@ -43,8 +46,10 @@ class EmpresaLectura {
                     $empresaData['FechaCreacion'],
                     $empresaData['CorreoElectronico'],
                     $empresaData['Telefono'],
+                    $empresaData['NombreUsuario'],
                     $empresaData['Contrasenia'],
-                    $empresaData['Habilitado']
+                    $empresaData['Habilitado'],
+                    $empresaData['CredencialesTemporales']
                 );
             }
             return $empresas;
