@@ -14,7 +14,7 @@
     <button onclick="obtenerCuponPorId(1)">Obtener Cupón Por ID</button>
     <button onclick="obtenerTodosLosCupones()">Obtener Todos los Cupones</button>
     <button onclick="crearCupon({
-        Nombre: 'Actulizado',
+        Nombre: 'Nuevo Cupón',
         Imagen: 'imagen.jpg',
         Ubicacion: 'Lugar XYZ',
         PrecioCupon: 100,
@@ -24,7 +24,7 @@
     })">Crear Cupon</button>
     <button onclick="actualizarCupon({
         IDCupon: 1, // ID del cupón que deseas actualizar
-        Nombre: 'Actulizado',
+        Nombre: 'Cupón Actualizado',
         Imagen: 'imagen.jpg',
         Ubicacion: 'Lugar XYZ',
         PrecioCupon: 100,
@@ -32,7 +32,7 @@
         IDCategoria: 1,
         Habilitado: 1
     })">Actualizar Cupon</button>
-    <button onclick="eliminarCupon(1)">Eliminar Cupon</button>
+    <button onclick="eliminarCupon(2)">Eliminar Cupon</button>
 
     <h2>Empresas</h2>
     <button onclick="obtenerEmpresaPorId(1)">Obtener Empresa Por ID</button>
@@ -44,8 +44,10 @@
         FechaCreacion: '2024-05-30',
         CorreoElectronico: 'empresa@nueva.com',
         Telefono: '555-1234',
+        NombreUsuario: 'usuario',
         Contrasenia: 'contrasenia123',
-        Habilitado: 1
+        Habilitado: 1,
+        CredencialesTemporales: 0
     })">Crear Empresa</button>
     <button onclick="actualizarEmpresa({
         IDEmpresa: 1,
@@ -55,11 +57,32 @@
         FechaCreacion: '2024-05-30',
         CorreoElectronico: 'empresa@actualizada.com',
         Telefono: '555-5678',
+        NombreUsuario: 'usuario',
         Contrasenia: 'contrasenia1234',
-        Habilitado: 1
+        Habilitado: 1,
+        CredencialesTemporales: 0
     })">Actualizar Empresa</button>
-    <button onclick="postCategoriaCupon('Nombre de prueba', 'Descripción de prueba')">Agregar categoria</button>
-    <button onclick="putCategoriaCupon(1, 'Nombre actualizado', 'Descripción actualizada')">Actualizar categoria</button>
+    <button onclick="eliminarEmpresa(2)">Eliminar Empresa</button>
+    <h2>Categoría de Cupones</h2>
+    <!-- Botones para manipular categorías de cupones -->
+    <button onclick="crearCategoriaCupon({
+        Nombre: 'Nueva Categoría',
+        Descripcion: 'Descripción de la nueva categoría'
+    })">Crear Categoría de Cupón</button>
+    <button onclick="actualizarCategoriaCupon({
+        IDCategoria: 1, // ID de la categoría que deseas actualizar
+        Nombre: 'Categoría Actualizada',
+        Descripcion: 'Nueva descripción de la categoría actualizada'
+    })">Actualizar Categoría de Cupón</button>
+    <button onclick="eliminarCategoriaCupon(2)">Eliminar Categoría de Cupón</button>
+    <h2>Categoría de Cupones</h2>
+    <!-- Botones para manipular categorías de cupones -->
+    <button onclick="obtenerCategoriaPorId(1)">Obtener Categoría Por ID</button>
+    <button onclick="obtenerTodasLasCategorias()">Obtener Todas las Categorías</button>
+    <h1>Pruebas de API</h1>
+    <h2>Promociones</h2>
+    <!-- Botón para obtener promociones por empresa -->
+    <button onclick="obtenerTodasLasPromociones(1)">Obtener Promociones Por Empresa</button>
 </body>
 
 </html>
