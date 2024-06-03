@@ -1,29 +1,42 @@
 <?php
+<<<<<<< HEAD
 $pdo = null;
 $host = "localhost:3306";
 $user = "root";
 $password = "";
 $bd = "tarea3_lenguajes_php";
 
+=======
+>>>>>>> 1f9730d78e7b85ae30b75eaec9ff5e643e2aef89
 require_once "../Model/Empresa.php";
 
-function conectar() {
-    try {
-        $GLOBALS['pdo'] = new PDO("mysql:host=" . $GLOBALS['host'] . ";dbname=" . $GLOBALS['bd'], $GLOBALS['user'], $GLOBALS['password']);
-        $GLOBALS['pdo']->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    } catch (PDOException $e) {
-        throw new Exception("Error!: No se pudo conectar a la bd " . $GLOBALS['bd'] . "\nError!: " . $e->getMessage());
-    }
-}
-
-function desconectar() {
-    $GLOBALS['pdo'] = null;
-}
-
 class EmpresaModificarData {
+    private $pdo;
+    private $host = "localhost:3307";
+    private $user = "root";
+    private $password = "";
+    private $bd = "tarea3_lenguajes_php";
+
+    private function conectar() {
+        try {
+            $this->pdo = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->bd, $this->user, $this->password);
+            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            die(json_encode(['error' => "Error!: No se pudo conectar a la bd " . $this->bd . " - " . $e->getMessage()]));
+        }
+    }
+
+    private function desconectar() {
+        $this->pdo = null;
+    }
+
     public function registrarEmpresa(Empresa $empresa) {
         try {
+<<<<<<< HEAD
             conectar();
+=======
+            $this->conectar();
+>>>>>>> 1f9730d78e7b85ae30b75eaec9ff5e643e2aef89
             $query = "INSERT INTO Empresa (NombreEmpresa, DireccionFisica, CedulaFisicaJuridica, FechaCreacion, CorreoElectronico, Telefono, NombreUsuario, Contrasenia, Habilitado, CredencialesTemporales) 
                       VALUES (:NombreEmpresa, :DireccionFisica, :CedulaFisicaJuridica, :FechaCreacion, :CorreoElectronico, :Telefono, :NombreUsuario, :Contrasenia, :Habilitado, :CredencialesTemporales)";
             $sentencia = $GLOBALS['pdo']->prepare($query);
@@ -40,7 +53,7 @@ class EmpresaModificarData {
             $sentencia->execute();
             $idAutoIncrement = $GLOBALS['pdo']->lastInsertId();
             $sentencia->closeCursor();
-            desconectar();
+            $this->desconectar();
             return $idAutoIncrement;
         } catch (Exception $e) {
             throw new Exception("Error al registrar la empresa: " . $e->getMessage());
@@ -49,7 +62,7 @@ class EmpresaModificarData {
     
     public function actualizarEmpresa(Empresa $empresa) {
         try {
-            conectar();
+            $this->conectar();
             $query = "UPDATE Empresa SET 
                       NombreEmpresa = :NombreEmpresa, 
                       DireccionFisica = :DireccionFisica, 
@@ -76,7 +89,7 @@ class EmpresaModificarData {
             $sentencia->bindParam(':CredencialesTemporales', $empresa->CredencialesTemporales);
             $sentencia->execute();
             $sentencia->closeCursor();
-            desconectar();
+            $this->desconectar();
             return true;
         } catch (Exception $e) {
             throw new Exception("Error al actualizar la empresa: " . $e->getMessage());
@@ -85,17 +98,37 @@ class EmpresaModificarData {
     
     public function eliminarEmpresa($id) {
         try {
-            conectar();
+            $this->conectar();
             $query = "UPDATE Empresa SET Habilitado = 0 WHERE IDEmpresa = :IDEmpresa";
             $sentencia = $GLOBALS['pdo']->prepare($query);
             $sentencia->bindParam(':IDEmpresa', $id, PDO::PARAM_INT);
             $sentencia->execute();
             $sentencia->closeCursor();
-            desconectar();
+            $this->desconectar();
             return true;
         } catch (Exception $e) {
+            $this->desconectar();
             die("Error: " . $e->getMessage());
         }
     }    
+
+    public function verificarInicioSesion($NombreUsuario, $Contrasenia){
+        try {
+            $query = "SELECT 1 FROM UsuarioAdmin WHERE NombreUsuario = :NombreUsuario and Contrasenia = :Contrasenia";
+            $sentencia = $this->pdo->prepare($query); 
+            $sentencia->bindParam(':NombreUsuario', $NombreUsuario);
+            $sentencia->bindParam(':Contrasenia', $Contrasenia);
+            $sentencia->execute();
+            $resultado = $sentencia->fetch(PDO::FETCH_ASSOC); 
+            $sentencia->closeCursor();
+            if($resultado) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception $e) {
+            die("Error: " . $e->getMessage());
+        }
+    }
 }
 ?>

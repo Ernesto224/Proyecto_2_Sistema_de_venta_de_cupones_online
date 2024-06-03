@@ -3,7 +3,11 @@ require_once "../Model/Cupon.php";
 
 class CuponLecturaData {
     private $pdo;
+<<<<<<< HEAD
     private $host = "localhost:3306";
+=======
+    private $host = "localhost:3307";
+>>>>>>> 1f9730d78e7b85ae30b75eaec9ff5e643e2aef89
     private $user = "root";
     private $password = "";
     private $bd = "tarea3_lenguajes_php";

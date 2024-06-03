@@ -1,55 +1,40 @@
 <?php
-$pdo = null;
-$host = "localhost:3306";
-$user = "root";
-$password = "";
-$bd = "phpmyadmin";
-
 require_once "../Model/UsuarioAdmin.php";
 
-function conectar(){
-    try{
-        $GLOBALS['pdo'] = new PDO("mysql:host=".$GLOBALS['host'].";dbname=".$GLOBALS['bd']."", $GLOBALS['user'], $GLOBALS['password']);
-        $GLOBALS['pdo']->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    } catch (PDOException $e){
-        print "Error!: No se pudo conectar a la bd ".$GLOBALS['bd']."<br/>";
-        print "\nError!: ".$e."<br/>";
-        die();
-    }
-}
-
-function desconectar() {
-    $GLOBALS['pdo'] = null;
-}
-
 class UsuarioAdminLecturaData{
-    public function obtenerTodasLasEmpresas(): ?array {
+    private $pdo;
+    private $host = "localhost:3307";
+    private $user = "root";
+    private $password = "";
+    private $bd = "tarea3_lenguajes_php";
+
+    private function conectar() {
         try {
-            conectar();
-            $query = "SELECT * FROM Empresa";
-            $sentencia = $GLOBALS['pdo']->prepare($query);
-            $sentencia->setFetchMode(PDO::FETCH_ASSOC);
-            $sentencia->execute();
-            $resultado = $sentencia->fetchAll();
-            desconectar();
-            return $resultado;
-        } catch (Exception $e) {
-            die("Error: " . $e->getMessage());
-            return null;
+            $this->pdo = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->bd, $this->user, $this->password);
+            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            die(json_encode(['error' => "Error!: No se pudo conectar a la bd " . $this->bd . " - " . $e->getMessage()]));
         }
     }
 
-    public function obtenerCuponesEmpresa($idEmpresa) {
+    private function desconectar() {
+        $this->pdo = null;
+    }
+    
+    public function verificarInicioSesion($NombreUsuario, $Contrasenia){
         try {
-            conectar();
-            $query = "SELECT * FROM Cupon WHERE IDEmpresa = :idEmpresa";
-            $sentencia = $GLOBALS['pdo']->prepare($query);
-            $sentencia->bindParam(':idEmpresa', $idEmpresa, PDO::PARAM_INT);
-            $sentencia->setFetchMode(PDO::FETCH_ASSOC);
+            $query = "SELECT 1 FROM UsuarioAdmin WHERE NombreUsuario = :NombreUsuario and Contrasenia = :Contrasenia";
+            $sentencia = $this->pdo->prepare($query); 
+            $sentencia->bindParam(':NombreUsuario', $NombreUsuario);
+            $sentencia->bindParam(':Contrasenia', $Contrasenia);
             $sentencia->execute();
-            $resultado = $sentencia->fetchAll();
-            desconectar();
-            return $resultado;
+            $resultado = $sentencia->fetch(PDO::FETCH_ASSOC); 
+            $sentencia->closeCursor();
+            if($resultado) {
+                return true;
+            } else {
+                return false;
+            }
         } catch (Exception $e) {
             die("Error: " . $e->getMessage());
         }

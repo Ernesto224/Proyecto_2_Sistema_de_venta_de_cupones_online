@@ -1,5 +1,6 @@
 <?php
 require_once "../Data/EmpresaLecturaData.php";
+require_once "../Model/Empresa.php";
 
 class EmpresaLectura {
     private $empresaLecturaData;

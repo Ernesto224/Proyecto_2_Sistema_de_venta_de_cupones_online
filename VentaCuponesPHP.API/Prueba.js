@@ -26,7 +26,6 @@ const obtenerTodosLosCupones = async () => {
     }
 }
 
-
 // Funciones para Empresas
 const obtenerEmpresaPorId = async (id) => {
     try {
@@ -128,6 +127,7 @@ const empresaData = {
 const idEmpresaActualizar = 1; // ID de la empresa que deseas actualizar
 const idEmpresaEliminar = 2; // ID de la empresa que deseas eliminar
 
+<<<<<<< HEAD
 const urlBase1 = 'http://localhost/VentaCuponesPHP.API/Presentation/CuponModificarController.php';
 const crearCupon = async (cuponData) => {
     try {
@@ -137,12 +137,29 @@ const crearCupon = async (cuponData) => {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
             body: new URLSearchParams({ ...cuponData, METHOD: 'POST' })
+=======
+const urlBase1 = 'http://localhost/VentaCuponesPHP.API/Presentation';
+
+// Funciones para Cupones
+const crearCupon = async (cuponData) => {
+    try {
+        const response = await fetch(`${urlBase1}/CuponModificarController.php`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ ...cuponData, METHOD: 'POST' })
+>>>>>>> 1f9730d78e7b85ae30b75eaec9ff5e643e2aef89
         });
         if (!response.ok) {
             throw new Error('Hubo un problema al crear el cupón: ' + response.statusText);
         }
         const nuevoCupon = await response.json();
+<<<<<<< HEAD
         console.log('Cupón creado:', nuevoCupon);
+=======
+        console.log('Cupon creado:', nuevoCupon);
+>>>>>>> 1f9730d78e7b85ae30b75eaec9ff5e643e2aef89
     } catch (error) {
         console.error('Error al crear el cupón:', error);
     }
@@ -150,18 +167,31 @@ const crearCupon = async (cuponData) => {
 
 const actualizarCupon = async (cuponData) => {
     try {
+<<<<<<< HEAD
         const response = await fetch(`${urlBase}/CuponModificarController.php`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
             body: new URLSearchParams({ ...cuponData, METHOD: 'PUT' })
+=======
+        const response = await fetch(`${urlBase1}/CuponModificarController.php`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ ...cuponData, METHOD: 'PUT' })
+>>>>>>> 1f9730d78e7b85ae30b75eaec9ff5e643e2aef89
         });
         if (!response.ok) {
             throw new Error('Hubo un problema al actualizar el cupón: ' + response.statusText);
         }
         const cuponActualizado = await response.json();
+<<<<<<< HEAD
         console.log('Cupón actualizado:', cuponActualizado);
+=======
+        console.log('Cupon actualizado:', cuponActualizado);
+>>>>>>> 1f9730d78e7b85ae30b75eaec9ff5e643e2aef89
     } catch (error) {
         console.error('Error al actualizar el cupón:', error);
     }
@@ -169,12 +199,21 @@ const actualizarCupon = async (cuponData) => {
 
 const eliminarCupon = async (id) => {
     try {
+<<<<<<< HEAD
         const response = await fetch(`${urlBase}/CuponModificarController.php?IDCupon=${id}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
             body: new URLSearchParams({ METHOD: 'DELETE' })
+=======
+        const response = await fetch(`${urlBase1}/CuponModificarController.php`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ METHOD: 'DELETE', IDCupon: id })
+>>>>>>> 1f9730d78e7b85ae30b75eaec9ff5e643e2aef89
         });
         if (!response.ok) {
             throw new Error('Hubo un problema al eliminar el cupón: ' + response.statusText);
@@ -186,8 +225,11 @@ const eliminarCupon = async (id) => {
     }
 }
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 1f9730d78e7b85ae30b75eaec9ff5e643e2aef89
 // Ejemplo de cómo llamar a las funciones
 const cuponData = {
     Nombre: 'Nuevo Cupon',
@@ -201,7 +243,11 @@ const cuponData = {
 
 const cuponDataActualizar = {
     IDCupon: 1, // ID del cupón que deseas actualizar
+<<<<<<< HEAD
     Nombre: 'Actualizado',
+=======
+    Nombre: 'Actulizado',
+>>>>>>> 1f9730d78e7b85ae30b75eaec9ff5e643e2aef89
     Imagen: 'imagen.jpg',
     Ubicacion: 'Lugar XYZ',
     PrecioCupon: 100,
@@ -209,6 +255,7 @@ const cuponDataActualizar = {
     IDCategoria: 1,
     Habilitado: 1
 };
+<<<<<<< HEAD
 const urlBase2 = 'http://localhost/VentaCuponesPHP.API/Presentation/CategoriaCuponModificarController.php';
 const crearCategoriaCupon = async (categoriaData) => {
     try {
@@ -313,3 +360,60 @@ const obtenerTodasLasPromociones = async (id) => {
     }
 }
 
+=======
+
+// Función para hacer una solicitud POST
+function postCategoriaCupon(nombre, descripcion) {
+    fetch('http://localhost/VentaCuponesPHP.API/Presentation/CategoriaCuponModificarController.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            METHOD: 'POST',
+            Nombre: nombre,
+            Descripcion: descripcion
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error en la solicitud');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('ID del nuevo cupón:', data.IDCupon);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+// Función para hacer una solicitud PUT
+function putCategoriaCupon(idCategoria, nombre, descripcion) {
+    fetch('http://localhost/VentaCuponesPHP.API/Presentation/CategoriaCuponModificarController.php', {
+        method: 'POST', // Aunque estamos haciendo una solicitud PUT, el método debe ser POST por las limitaciones del formulario
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            METHOD: 'PUT',
+            IDCategoria: idCategoria,
+            Nombre: nombre,
+            Descripcion: descripcion
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error en la solicitud');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Mensaje:', data.message);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+>>>>>>> 1f9730d78e7b85ae30b75eaec9ff5e643e2aef89
