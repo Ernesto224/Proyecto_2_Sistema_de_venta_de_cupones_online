@@ -24,9 +24,17 @@ class EmpresaModificar {
         }
     }
 
-    public function eliminarEmpresa($id) {
+    public function crearCredencialesTemporales(Empresa $empresa) {
         try {
-            return $this->empresaModificarData->eliminarEmpresa($id);
+            return $this->empresaModificarData->crearCredencialesTemporales($empresa);
+        } catch (Exception $e) {
+            throw new Exception("Error al actualizar la empresa: " . $e->getMessage());
+        }
+    }
+    
+    public function habilitarInabilitarEmpresa($idEmpresa, $estado) {
+        try {
+            return $this->empresaModificarData->habilitarInabilitarEmpresa($idEmpresa, $estado);
         } catch (Exception $e) {
             throw new Exception("Error al eliminar la empresa: " . $e->getMessage());
         }

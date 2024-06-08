@@ -1,42 +1,40 @@
 <?php
+require_once "../Data/ContextoDeBaseDeDatos.php";
 require_once "../Model/Cupon.php";
 
 class CuponLecturaData {
-    private $pdo;
-    private $host = "localhost:3306";
-    private $user = "root";
-    private $password = "";
-    private $bd = "tarea3_lenguajes_php";
+    private $dbContext;
 
-    private function conectar() {
-        try {
-            $this->pdo = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->bd, $this->user, $this->password);
-            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $e) {
-            die(json_encode(['error' => "Error!: No se pudo conectar a la bd " . $this->bd . " - " . $e->getMessage()]));
-        }
+    public function __construct() {
+        $this->dbContext = new ContextoDeBaseDeDatos();
     }
 
-    private function desconectar() {
-        $this->pdo = null;
-    }
-    
     function obtenerCuponPorId($id) {
         try {
-            $this->conectar();
-            $query = "SELECT * FROM Cupon WHERE IDCupon = :id";
-            $sentencia = $this->pdo->prepare($query);
+            $this->dbContext->conectar();
+            $query = "SELECT 
+                `cupon`.`IDCupon`, 
+                `cupon`.`Nombre`, 
+                `cupon`.`Imagen`, 
+                `cupon`.`Ubicacion`, 
+                `cupon`.`PrecioCupon`, 
+                `cupon`.`IDEmpresa`, 
+                `cupon`.`IDCategoria`,
+                `cupon`.`Habilitado`
+                FROM `cupon`
+                WHERE IDCupon = :id";
+            $sentencia = $this->dbContext->prepararSentencia($query);
             $sentencia->bindParam(':id', $id, PDO::PARAM_INT);
             $sentencia->setFetchMode(PDO::FETCH_ASSOC);
             $sentencia->execute();
             $resultado = $sentencia->fetch();
-            $this->desconectar();
+            $this->dbContext->desconectar();
             if (!$resultado) {
-                throw new Exception("CupÃ³n no encontrado");
+                throw new Exception("Cupón no encontrado");
             }
             return $resultado;
         } catch (Exception $e) {
-            $this->desconectar();
+            $this->dbContext->desconectar();
             echo json_encode(['error' => "Error: " . $e->getMessage()]);
             die();
         }
@@ -44,23 +42,35 @@ class CuponLecturaData {
 
     function obtenerTodosLosCupones() {
         try {
-            $this->conectar();
-            $query = "SELECT * FROM Cupon";
-            $sentencia = $this->pdo->prepare($query);
+            $this->dbContext->conectar();
+            $query = "SELECT 
+                `cupon`.`IDCupon`, 
+                `cupon`.`Nombre`, 
+                `cupon`.`Imagen`, 
+                `cupon`.`Ubicacion`, 
+                `cupon`.`PrecioCupon`, 
+                `cupon`.`IDEmpresa`, 
+                `cupon`.`IDCategoria`, 
+                `promocion`.`Descuento`,
+                `cupon`.`Habilitado`
+                FROM `cupon` 
+                LEFT JOIN `promocion` 
+                    ON `cupon`.`IDCupon` = `promocion`.`IDCupon`  
+                WHERE `cupon`.`Habilitado` = 1";
+            $sentencia = $this->dbContext->prepararSentencia($query);
             $sentencia->setFetchMode(PDO::FETCH_ASSOC);
             $sentencia->execute();
             $resultado = $sentencia->fetchAll();
-            $this->desconectar();
+            $this->dbContext->desconectar();
             if (!$resultado) {
                 throw new Exception("No se encontraron cupones");
             }
             return $resultado;
         } catch (Exception $e) {
-            $this->desconectar();
+            $this->dbContext->desconectar();
             echo json_encode(['error' => "Error: " . $e->getMessage()]);
             die();
         }
     }
-
 }
 ?>

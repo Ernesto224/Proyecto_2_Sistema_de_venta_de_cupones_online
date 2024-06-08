@@ -8,6 +8,7 @@ header('Content-Type: application/json');
 $promocionLectura = new PromocionLectura();
 
 try {
+    
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         if (isset($_GET['id'])) {
             $promociones = $promocionLectura->obtenerTodasLasPromocionesPorEmpresa($_GET['id']);
@@ -21,7 +22,7 @@ try {
         http_response_code(200);
         exit();
     }
-
+    
     http_response_code(400);
     echo json_encode(['error' => 'Método no permitido']);
 } catch (Exception $e) {

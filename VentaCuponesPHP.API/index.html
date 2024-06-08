@@ -10,8 +10,9 @@
 
 <body>
     <h1>Pruebas de API</h1>
+
     <h2>Cupones</h2>
-    <button onclick="obtenerCuponPorId(1)">Obtener Cupón Por ID</button>
+    <button onclick="obtenerCuponPorId(2)">Obtener Cupón Por ID</button>
     <button onclick="obtenerTodosLosCupones()">Obtener Todos los Cupones</button>
     <button onclick="crearCupon({
         Nombre: 'Nuevo Cupón',
@@ -47,10 +48,10 @@
         NombreUsuario: 'usuario',
         Contrasenia: 'contrasenia123',
         Habilitado: 1,
-        CredencialesTemporales: 0
+        CredencialesTemporales: 1
     })">Crear Empresa</button>
     <button onclick="actualizarEmpresa({
-        IDEmpresa: 1,
+        IDEmpresa: 5,
         NombreEmpresa: 'Empresa Actualizada',
         DireccionFisica: 'Avenida Secundaria 456',
         CedulaFisicaJuridica: '987654321',
@@ -62,7 +63,8 @@
         Habilitado: 1,
         CredencialesTemporales: 0
     })">Actualizar Empresa</button>
-    <button onclick="eliminarEmpresa(2)">Eliminar Empresa</button>
+    <button onclick="eliminarEmpresa(3)">Eliminar Empresa</button>
+
     <h2>Categoría de Cupones</h2>
     <!-- Botones para manipular categorías de cupones -->
     <button onclick="crearCategoriaCupon({
@@ -74,15 +76,34 @@
         Nombre: 'Categoría Actualizada',
         Descripcion: 'Nueva descripción de la categoría actualizada'
     })">Actualizar Categoría de Cupón</button>
-    <button onclick="eliminarCategoriaCupon(2)">Eliminar Categoría de Cupón</button>
-    <h2>Categoría de Cupones</h2>
-    <!-- Botones para manipular categorías de cupones -->
     <button onclick="obtenerCategoriaPorId(1)">Obtener Categoría Por ID</button>
     <button onclick="obtenerTodasLasCategorias()">Obtener Todas las Categorías</button>
-    <h1>Pruebas de API</h1>
+    
     <h2>Promociones</h2>
     <!-- Botón para obtener promociones por empresa -->
-    <button onclick="obtenerTodasLasPromociones(1)">Obtener Promociones Por Empresa</button>
+    <button onclick="obtenerTodasLasPromociones(2)">Ver Promociones</button>
+    <button onclick="registrarPromocion({
+        FechaDeInicio: '2023-06-01',
+        FechaDeVencimiento: '2023-12-31',
+        Descuento: 20,
+        IDEmpresa: 1,
+        IDCupon: 1,
+        Habilitado: 1
+    })">Crear promociones</button>
+    <button onclick="actualizarPromocion({
+        IDPromocion: 1,
+        FechaDeInicio: '2023-07-01',
+        FechaDeVencimiento: '2023-11-30',
+        Descuento: 25,
+        IDEmpresa: 1,
+        IDCupon: 1,
+        Habilitado: 1
+    })">actualizar promociones</button>
+    <button onclick="eliminarPromocion(2)">inabilitar Promociones</button>
+
+    <h2>Admin</h2>
+    <button onclick="verificar()">verificar inicio de sesion</button>
+
 </body>
 
 </html>

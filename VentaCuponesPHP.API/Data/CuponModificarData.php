@@ -1,69 +1,64 @@
 <?php
-
+require_once "../Data/ContextoDeBaseDeDatos.php";
 require_once "../Model/Cupon.php";
 
 class CuponModificarData {
-    private $pdo;
-    
+    private $dbContext;
+
     public function __construct() {
-        $this->pdo = null;
-        $this->host = "localhost:3306";
-        $this->user = "root";
-        $this->password = "";
-        $this->bd = "tarea3_lenguajes_php";
-    }
-
-    private function conectar() {
-        try {
-            $this->pdo = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->bd, $this->user, $this->password);
-            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $e) {
-            print "Error!: No se pudo conectar a la bd " . $this->bd . "<br/>";
-            print "\nError!: " . $e->getMessage() . "<br/>";
-            die();
-        }
-    }
-
-    private function desconectar() {
-        $this->pdo = null;
+        $this->dbContext = new ContextoDeBaseDeDatos();
     }
 
     public function registrarCupon(Cupon $cupon) {
         try {
-            $this->conectar();
-            $query = "INSERT INTO Cupon(Nombre, Imagen, Ubicacion, PrecioCupon, IDEmpresa, IDCategoria, Habilitado)
-                      VALUES(:Nombre, :Imagen, :Ubicacion, :PrecioCupon, :IDEmpresa, :IDCategoria, :Habilitado)";
-            $sentencia = $this->pdo->prepare($query);
+            $this->dbContext->conectar();
+            $query = "INSERT INTO Cupon 
+                (Nombre, 
+                Imagen, 
+                Ubicacion, 
+                PrecioCupon, 
+                IDEmpresa, 
+                IDCategoria, 
+                Habilitado)
+             VALUES(:Nombre, 
+                :Imagen, 
+                :Ubicacion, 
+                :PrecioCupon, 
+                :IDEmpresa, 
+                :IDCategoria, 
+                :Habilitado)";
+            $sentencia = $this->dbContext->prepararSentencia($query);
             $sentencia->bindParam(':Nombre', $cupon->Nombre);
             $sentencia->bindParam(':Imagen', $cupon->Imagen);
             $sentencia->bindParam(':Ubicacion', $cupon->Ubicacion);
             $sentencia->bindParam(':PrecioCupon', $cupon->PrecioCupon);
             $sentencia->bindParam(':IDEmpresa', $cupon->IDEmpresa);
             $sentencia->bindParam(':IDCategoria', $cupon->IDCategoria);
-            $sentencia->bindParam(':Habilitado', $cupon->Habilitado);  // <-- Punto y coma añadido aquí
+            $sentencia->bindParam(':Habilitado', $cupon->Habilitado,PDO::PARAM_INT);
             $sentencia->execute();
-            $idAutoIncrement = $this->pdo->lastInsertId();
+            $idAutoIncrement = $this->dbContext->retornarUltimoId();
             $sentencia->closeCursor();
-            $this->desconectar();
+            $this->dbContext->desconectar();
             return $idAutoIncrement;
         } catch (Exception $e) {
-            die("Error: " . $e->getMessage());
+            $this->dbContext->desconectar();
+            return -1;
         }
     }
-
+    
     public function actualizarCupon(Cupon $cupon) {
         try {
-            $this->conectar();
+            $this->dbContext->conectar();
             $query = "UPDATE Cupon SET 
-                      Nombre = :Nombre, 
-                      Imagen = :Imagen, 
-                      Ubicacion = :Ubicacion,
-                      PrecioCupon = :PrecioCupon, 
-                      IDEmpresa = :IDEmpresa,
-                      IDCategoria = :IDCategoria,
-                      Habilitado = :Habilitado
-                      WHERE IDCupon = :IDCupon";
-            $sentencia = $this->pdo->prepare($query);
+                Nombre = :Nombre, 
+                Imagen = :Imagen, 
+                Ubicacion = :Ubicacion,
+                PrecioCupon = :PrecioCupon, 
+                IDEmpresa = :IDEmpresa,
+                IDCategoria = :IDCategoria,
+                Habilitado = :Habilitado
+                WHERE IDCupon = :IDCupon";
+            $sentencia = $this->dbContext->prepararSentencia($query);
             $sentencia->bindParam(':Nombre', $cupon->Nombre);
             $sentencia->bindParam(':Imagen', $cupon->Imagen);
             $sentencia->bindParam(':Ubicacion', $cupon->Ubicacion);
@@ -71,31 +66,34 @@ class CuponModificarData {
             $sentencia->bindParam(':IDEmpresa', $cupon->IDEmpresa);
             $sentencia-> bindParam(':IDCategoria', $cupon->IDCategoria);
             $sentencia->bindParam(':Habilitado', $cupon->Habilitado);
-            $sentencia->bindParam(':IDCupon', $cupon->IDCupon);// <-- Punto y coma añadido aquí
+            $sentencia->bindParam(':IDCupon', $cupon->IDCupon);
             $sentencia->execute();
             $sentencia->closeCursor();
-            $this->desconectar();
+            $this->dbContext->desconectar();
             return true;
         } catch (Exception $e) {
-            die("Error: " . $e->getMessage());
+            $this->dbContext->desconectar();
+            return false;
         }
     }
 
-    public function eliminarCupon($id) {
+    public function habilitarInabilitarCupon($idCupon, $estado) {
         try {
-            $this->conectar();
-            $query = "UPDATE Cupon SET Habilitado = 0 WHERE IDCupon = :IDCupon";
-            $sentencia = $this->pdo->prepare($query);
-            $sentencia->bindParam(':IDCupon', $id, PDO::PARAM_INT);
+            $this->dbContext->conectar();
+            $query = "UPDATE Cupon 
+                SET Habilitado = :Estado 
+                WHERE IDCupon = :IDCupon";
+            $sentencia = $this->dbContext->prepararSentencia($query);
+            $sentencia->bindParam(':Estado', $estado, PDO::PARAM_INT);
+            $sentencia->bindParam(':IDCupon', $idCupon, PDO::PARAM_INT);
             $sentencia->execute();
             $sentencia->closeCursor();
-            $this->desconectar();
+            $this->dbContext->desconectar();
             return true;
-        } catch (PDOException $e) {
-            throw new Exception("Error al eliminar el cupón: " . $e->getMessage());
+        } catch (Exception $e) {
+            $this->dbContext->desconectar();
+            return false;
         }
     }
-    
 }
-
 ?>

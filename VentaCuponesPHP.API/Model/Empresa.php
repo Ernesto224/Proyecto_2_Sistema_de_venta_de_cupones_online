@@ -1,5 +1,4 @@
 <?php
-
 class Empresa {
     public $IDEmpresa;
     public $NombreEmpresa;
@@ -35,5 +34,4 @@ class Empresa {
         return json_encode(get_object_vars($this));
     }
 }
-
 ?>

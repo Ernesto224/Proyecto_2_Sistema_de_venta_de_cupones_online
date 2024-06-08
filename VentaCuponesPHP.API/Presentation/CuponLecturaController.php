@@ -1,6 +1,6 @@
 <?php
 require_once '../Business/CuponLectura.php';
-require_once '../Model/CategoriaCupon.php';
+require_once '../Model/Cupon.php';
 
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
@@ -8,6 +8,7 @@ header('Content-Type: application/json');
 $cuponLectura = new CuponLectura();
 
 try {
+
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         if (isset($_GET['id'])) {
             $cupon = $cuponLectura->obtenerCuponPorId($_GET['id']);
@@ -24,7 +25,7 @@ try {
         http_response_code(200);
         exit();
     }
-
+    
     http_response_code(400);
     echo json_encode(['error' => 'Método no permitido']);
 } catch (Exception $e) {

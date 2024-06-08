@@ -8,6 +8,7 @@ header('Content-Type: application/json');
 $categoariaCuponLectura = new CategoriaCuponLectura();
 
 try {
+    
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         if (isset($_GET['id'])) {
             $categoria = $categoariaCuponLectura->obtenerCategoriaPorId($_GET['id']);
@@ -24,7 +25,7 @@ try {
         http_response_code(200);
         exit();
     }
-
+    
     http_response_code(400);
     echo json_encode(['error' => 'Método no permitido']);
 } catch (Exception $e) {

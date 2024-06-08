@@ -1,32 +1,39 @@
 <?php
-$pdo = null;
-$host = "localhost:3306";
-$user = "root";
-$password = "";
-$bd = "tarea3_lenguajes_php";
-
+require_once "../Data/ContextoDeBaseDeDatos.php";
 require_once "../Model/Empresa.php";
 
-function conectar() {
-    try {
-        $GLOBALS['pdo'] = new PDO("mysql:host=" . $GLOBALS['host'] . ";dbname=" . $GLOBALS['bd'], $GLOBALS['user'], $GLOBALS['password']);
-        $GLOBALS['pdo']->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    } catch (PDOException $e) {
-        throw new Exception("Error!: No se pudo conectar a la bd " . $GLOBALS['bd'] . "\nError!: " . $e->getMessage());
-    }
-}
-
-function desconectar() {
-    $GLOBALS['pdo'] = null;
-}
-
 class EmpresaModificarData {
+    private $dbContext;
+
+    public function __construct() {
+        $this->dbContext = new ContextoDeBaseDeDatos();
+    }
+
     public function registrarEmpresa(Empresa $empresa) {
         try {
-            conectar();
-            $query = "INSERT INTO Empresa (NombreEmpresa, DireccionFisica, CedulaFisicaJuridica, FechaCreacion, CorreoElectronico, Telefono, NombreUsuario, Contrasenia, Habilitado, CredencialesTemporales) 
-                      VALUES (:NombreEmpresa, :DireccionFisica, :CedulaFisicaJuridica, :FechaCreacion, :CorreoElectronico, :Telefono, :NombreUsuario, :Contrasenia, :Habilitado, :CredencialesTemporales)";
-            $sentencia = $GLOBALS['pdo']->prepare($query);
+            $this->dbContext->conectar();
+            $query = "INSERT INTO Empresa 
+                (NombreEmpresa, 
+                DireccionFisica, 
+                CedulaFisicaJuridica, 
+                FechaCreacion, 
+                CorreoElectronico, 
+                Telefono, 
+                NombreUsuario, 
+                Contrasenia, 
+                Habilitado, 
+                CredencialesTemporales) 
+                VALUES (:NombreEmpresa, 
+                :DireccionFisica, 
+                :CedulaFisicaJuridica, 
+                :FechaCreacion, 
+                :CorreoElectronico, 
+                :Telefono, 
+                :NombreUsuario, 
+                :Contrasenia, 
+                :Habilitado, 
+                :CredencialesTemporales)";
+            $sentencia = $this->dbContext->prepararSentencia($query);
             $sentencia->bindParam(':NombreEmpresa', $empresa->NombreEmpresa);
             $sentencia->bindParam(':DireccionFisica', $empresa->DireccionFisica);
             $sentencia->bindParam(':CedulaFisicaJuridica', $empresa->CedulaFisicaJuridica);
@@ -35,34 +42,35 @@ class EmpresaModificarData {
             $sentencia->bindParam(':Telefono', $empresa->Telefono);
             $sentencia->bindParam(':NombreUsuario', $empresa->NombreUsuario);
             $sentencia->bindParam(':Contrasenia', $empresa->Contrasenia);
-            $sentencia->bindParam(':Habilitado', $empresa->Habilitado);
-            $sentencia->bindParam(':CredencialesTemporales', $empresa->CredencialesTemporales);
+            $sentencia->bindParam(':Habilitado', $empresa->Habilitado, PDO::PARAM_INT);
+            $sentencia->bindParam(':CredencialesTemporales', $empresa->CredencialesTemporales,PDO::PARAM_INT);
             $sentencia->execute();
-            $idAutoIncrement = $GLOBALS['pdo']->lastInsertId();
+            $idAutoIncrement = $this->dbContext->retornarUltimoId();
             $sentencia->closeCursor();
-            desconectar();
+            $this->dbContext->desconectar();
             return $idAutoIncrement;
         } catch (Exception $e) {
-            throw new Exception("Error al registrar la empresa: " . $e->getMessage());
+            $this->dbContext->desconectar();
+            return -1;
         }
     }
     
     public function actualizarEmpresa(Empresa $empresa) {
         try {
-            conectar();
+            $this->dbContext->conectar();
             $query = "UPDATE Empresa SET 
-                      NombreEmpresa = :NombreEmpresa, 
-                      DireccionFisica = :DireccionFisica, 
-                      CedulaFisicaJuridica = :CedulaFisicaJuridica, 
-                      FechaCreacion = :FechaCreacion, 
-                      CorreoElectronico = :CorreoElectronico, 
-                      Telefono = :Telefono,
-                      NombreUsuario = :NombreUsuario,
-                      Contrasenia = :Contrasenia, 
-                      Habilitado = :Habilitado,
-                      CredencialesTemporales = :CredencialesTemporales
-                      WHERE IDEmpresa = :IDEmpresa";
-            $sentencia = $GLOBALS['pdo']->prepare($query);
+                NombreEmpresa = :NombreEmpresa, 
+                DireccionFisica = :DireccionFisica, 
+                CedulaFisicaJuridica = :CedulaFisicaJuridica, 
+                FechaCreacion = :FechaCreacion, 
+                CorreoElectronico = :CorreoElectronico, 
+                Telefono = :Telefono,
+                NombreUsuario = :NombreUsuario,
+                Contrasenia = :Contrasenia, 
+                Habilitado = :Habilitado,
+                CredencialesTemporales = :CredencialesTemporales
+                WHERE IDEmpresa = :IDEmpresa";
+            $sentencia = $this->dbContext->prepararSentencia($query);
             $sentencia->bindParam(':NombreEmpresa', $empresa->NombreEmpresa);
             $sentencia->bindParam(':DireccionFisica', $empresa->DireccionFisica);
             $sentencia->bindParam(':CedulaFisicaJuridica', $empresa->CedulaFisicaJuridica);
@@ -76,25 +84,53 @@ class EmpresaModificarData {
             $sentencia->bindParam(':CredencialesTemporales', $empresa->CredencialesTemporales);
             $sentencia->execute();
             $sentencia->closeCursor();
-            desconectar();
+            $this->dbContext->desconectar();
             return true;
         } catch (Exception $e) {
-            throw new Exception("Error al actualizar la empresa: " . $e->getMessage());
+            $this->dbContext->desconectar();
+            return false;
         }
     }
-    
-    public function eliminarEmpresa($id) {
+
+    public function crearCredencialesTemporales(Empresa $empresa) {
         try {
-            conectar();
-            $query = "UPDATE Empresa SET Habilitado = 0 WHERE IDEmpresa = :IDEmpresa";
-            $sentencia = $GLOBALS['pdo']->prepare($query);
-            $sentencia->bindParam(':IDEmpresa', $id, PDO::PARAM_INT);
+            $this->dbContext->conectar();
+            $query = "UPDATE Empresa SET 
+                NombreUsuario = :NombreUsuario,
+                Contrasenia = :Contrasenia, 
+                CredencialesTemporales = :CredencialesTemporales
+                WHERE IDEmpresa = :IDEmpresa";
+            $sentencia = $this->dbContext->prepararSentencia($query);
+            $sentencia->bindParam(':NombreUsuario', $empresa->NombreUsuario);
+            $sentencia->bindParam(':Contrasenia', $empresa->Contrasenia);
+            $sentencia->bindParam(':IDEmpresa', $empresa->IDEmpresa);
+            $sentencia->bindParam(':CredencialesTemporales', $empresa->CredencialesTemporales);
             $sentencia->execute();
             $sentencia->closeCursor();
-            desconectar();
+            $this->dbContext->desconectar();
             return true;
         } catch (Exception $e) {
-            die("Error: " . $e->getMessage());
+            $this->dbContext->desconectar();
+            return false;
+        }
+    }
+
+    public function habilitarInabilitarEmpresa($idEmpresa, $estado) {
+        try {
+            $this->dbContext->conectar();
+            $query = "UPDATE Empresa SET 
+                Habilitado = :Estado 
+                WHERE IDEmpresa = :IDEmpresa";
+            $sentencia = $this->dbContext->prepararSentencia($query);
+            $sentencia->bindParam(':Estado', $estado, PDO::PARAM_INT);
+            $sentencia->bindParam(':IDEmpresa', $idEmpresa, PDO::PARAM_INT);
+            $sentencia->execute();
+            $sentencia->closeCursor();
+            $this->dbContext->desconectar();
+            return true;
+        } catch (Exception $e) {
+            $this->dbContext->desconectar();
+            return false;
         }
     }    
 }

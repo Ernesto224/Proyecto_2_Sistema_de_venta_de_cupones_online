@@ -41,5 +41,6 @@ class CategoriaCuponLectura {
             throw new Exception("Error al obtener todas las categorias: " . $e->getMessage());
         }
     }
+    
 }
 ?>

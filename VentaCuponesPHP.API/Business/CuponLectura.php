@@ -21,6 +21,7 @@ class CuponLectura {
                     $cuponData['PrecioCupon'],
                     $cuponData['IDEmpresa'],
                     $cuponData['IDCategoria'],
+                    null,
                     $cuponData['Habilitado']
                 );
             }
@@ -43,6 +44,7 @@ class CuponLectura {
                     $cuponData['PrecioCupon'],
                     $cuponData['IDEmpresa'],
                     $cuponData['IDCategoria'],
+                    $cuponData['Descuento'],
                     $cuponData['Habilitado']
                 );
             }

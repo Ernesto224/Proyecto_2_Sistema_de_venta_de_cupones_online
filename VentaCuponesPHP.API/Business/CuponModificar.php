@@ -16,8 +16,8 @@ class CuponModificar {
         return $this->cuponModificarData->actualizarCupon($cupon);
     }
 
-    public function eliminarCupon($id) {
-        return $this->cuponModificarData->eliminarCupon($id);
+    public function habilitarInabilitar($idCupon, $estado) {
+        return $this->cuponModificarData->habilitarInabilitarCupon($idCupon, $estado);
     }
 }
 ?>

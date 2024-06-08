@@ -1,3 +1,68 @@
+const uriPromocion = 'http://localhost/VentaCuponesPHP.API/Presentation/PromocionModificarController.php';
+
+async function registrarPromocion(promocion) {
+    const response = await fetch(uriPromocion, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body:  new URLSearchParams({
+            METHOD: 'POST',
+            ...promocion
+        })
+    });
+    const data = await response.json();
+    console.log('Promoción registrada:', data);
+}
+
+async function actualizarPromocion(promocion) {
+    const response = await fetch(uriPromocion, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: new URLSearchParams({
+            METHOD: 'PUT',
+            ...promocion
+        })
+    });
+    const data = await response.json();
+    console.log('Promoción actualizada:', data);
+}
+
+async function eliminarPromocion(idPromocion) {
+    const response = await fetch(uriPromocion, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: new URLSearchParams({
+            METHOD: 'DELETE',
+            IDPromocion: idPromocion,
+            Estado: 0
+        })
+    });
+    const data = await response.json();
+    console.log('Promoción eliminada:', data);
+}
+
+async function verificar() {
+    const response = await fetch('http://localhost/VentaCuponesPHP.API/Presentation/UsuarioAdminLecturaController.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: new URLSearchParams({
+            METHOD: 'POST',
+            NombreUsuario: "admin1",
+            Contrasenia: "contrasenia1"
+        })
+    });
+    const data = await response.json();
+    console.log('Promoción eliminada:', data);
+}
+
+
 const urlBase = 'http://localhost/VentaCuponesPHP.API/Presentation';
 
 const obtenerCuponPorId = async (id) => {
@@ -26,8 +91,6 @@ const obtenerTodosLosCupones = async () => {
     }
 }
 
-
-// Funciones para Empresas
 const obtenerEmpresaPorId = async (id) => {
     try {
         const response = await fetch(`${urlBase}/EmpresaLecturaController.php?id=${id}`);
@@ -95,12 +158,12 @@ const actualizarEmpresa = async (empresaData) => {
 
 const eliminarEmpresa = async (id) => {
     try {
-        const response = await fetch(`${urlBase}/EmpresaModificarController.php?IDEmpresa=${id}`, {
+        const response = await fetch(`${urlBase}/EmpresaModificarController.php?`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
-            body: new URLSearchParams({ METHOD: 'DELETE' })
+            body: new URLSearchParams({ METHOD: 'DELETE', IDEmpresa: id, Estado: 0 })
         });
         if (!response.ok) {
             throw new Error('Hubo un problema al eliminar la empresa: ' + response.statusText);
@@ -112,21 +175,6 @@ const eliminarEmpresa = async (id) => {
     }
 }
 
-// Ejemplo de cómo llamar a las funciones
-const empresaData = {
-    NombreEmpresa: 'Nueva Empresa',
-    DireccionFisica: 'Calle Principal 123',
-    CedulaFisicaJuridica: '123456789',
-    FechaCreacion: '2024-05-30',
-    CorreoElectronico: 'empresa@nueva.com',
-    Telefono: '555-1234',
-    NombreUsuario: 'JESNER ELICER',
-    Contrasenia: 'contrasenia123',
-    Habilitado: 1
-};
-
-const idEmpresaActualizar = 1; // ID de la empresa que deseas actualizar
-const idEmpresaEliminar = 2; // ID de la empresa que deseas eliminar
 
 const urlBase1 = 'http://localhost/VentaCuponesPHP.API/Presentation/CuponModificarController.php';
 const crearCupon = async (cuponData) => {
@@ -167,14 +215,33 @@ const actualizarCupon = async (cuponData) => {
     }
 }
 
-const eliminarCupon = async (id) => {
+const habilitarCupon= async (id) => {
     try {
-        const response = await fetch(`${urlBase}/CuponModificarController.php?IDCupon=${id}`, {
+        const response = await fetch(`${urlBase}/CuponModificarController.php`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
-            body: new URLSearchParams({ METHOD: 'DELETE' })
+            body: new URLSearchParams({ METHOD: 'DELETE', IDCupon: id, Estado: 1 })
+        });
+        if (!response.ok) {
+            throw new Error('Hubo un problema al eliminar el cupón: ' + response.statusText);
+        }
+        const mensaje = await response.json();
+        console.log('Mensaje del servidor:', mensaje);
+    } catch (error) {
+        console.error('Error al eliminar el cupón:', error);
+    }
+}
+
+const eliminarCupon = async (id) => {
+    try {
+        const response = await fetch(`${urlBase}/CuponModificarController.php`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: new URLSearchParams({ METHOD: 'DELETE',  IDCupon: id, Estado: 0 })
         });
         if (!response.ok) {
             throw new Error('Hubo un problema al eliminar el cupón: ' + response.statusText);
@@ -187,32 +254,11 @@ const eliminarCupon = async (id) => {
 }
 
 
+const urlBase2 = 'http://localhost/VentaCuponesPHP.API/Presentation';
 
-// Ejemplo de cómo llamar a las funciones
-const cuponData = {
-    Nombre: 'Nuevo Cupon',
-    Imagen: 'imagen.jpg',
-    Ubicacion: 'Lugar XYZ',
-    PrecioCupon: 100,
-    IDEmpresa: 1,
-    IDCategoria: 1,
-    Habilitado: 1
-};
-
-const cuponDataActualizar = {
-    IDCupon: 1, // ID del cupón que deseas actualizar
-    Nombre: 'Actualizado',
-    Imagen: 'imagen.jpg',
-    Ubicacion: 'Lugar XYZ',
-    PrecioCupon: 100,
-    IDEmpresa: 1,
-    IDCategoria: 1,
-    Habilitado: 1
-};
-const urlBase2 = 'http://localhost/VentaCuponesPHP.API/Presentation/CategoriaCuponModificarController.php';
 const crearCategoriaCupon = async (categoriaData) => {
     try {
-        const response = await fetch(`${urlBase}/CategoriaCuponModificarController.php`, {
+        const response = await fetch(`${urlBase2}/CategoriaCuponModificarController.php`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -231,7 +277,7 @@ const crearCategoriaCupon = async (categoriaData) => {
 
 const actualizarCategoriaCupon = async (categoriaData) => {
     try {
-        const response = await fetch(`${urlBase}/CategoriaCuponModificarController.php`, {
+        const response = await fetch(`${urlBase2}/CategoriaCuponModificarController.php`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -248,31 +294,9 @@ const actualizarCategoriaCupon = async (categoriaData) => {
     }
 }
 
-// No es necesario enviar el ID de la categoría para eliminarla, solo el método
-// Método para eliminar una categoría de cupón por su ID
-const eliminarCategoriaCupon = async (id) => {
-    try {
-        const response = await fetch(`${urlBase}/CategoriaCuponModificarController.php?IDCategoria=${id}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: new URLSearchParams({ METHOD: 'DELETE' })
-        });
-        if (!response.ok) {
-            throw new Error('Hubo un problema al eliminar la categoría de cupón: ' + response.statusText);
-        }
-        const mensaje = await response.json();
-        console.log('Mensaje del servidor:', mensaje);
-    } catch (error) {
-        console.error('Error al eliminar la categoría de cupón:', error);
-    }
-}
 
-
-// Método para obtener una categoría de cupón por su ID
 const urlBase3 = 'http://localhost/VentaCuponesPHP.API/Presentation/CategoriaCuponLecturaController.php';
-// Método para obtener una categoría de cupón por su ID
+
 const obtenerCategoriaPorId = async (id) => {
     try {
         const response = await fetch(`${urlBase}/CategoriaCuponLecturaController.php?id=${id}`);
@@ -286,7 +310,6 @@ const obtenerCategoriaPorId = async (id) => {
     }
 }
 
-// Método para obtener todas las categorías de cupón
 const obtenerTodasLasCategorias = async () => {
     try {
         const response = await fetch(`${urlBase}/CategoriaCuponLecturaController.php`);
@@ -312,4 +335,3 @@ const obtenerTodasLasPromociones = async (id) => {
         console.error('Error al obtener todas las promociones:', error);
     }
 }
-
