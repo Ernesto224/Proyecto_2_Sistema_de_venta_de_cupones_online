@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "KqIDS5yhfJ/xWKLj2vTfIUaR0ihmBCzeGgKzJMudSsdy7sa3+RjgeMr3uwtiZAyFhQQ6WsSLeU1euCxE0/2yCQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Ernesto\\Desktop\\VentaCupones.API\\VentaCupones.BW\\VentaCupones.BW.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Ernesto\\.nuget\\packages\\portable.bouncycastle\\1.9.0\\portable.bouncycastle.1.9.0.nupkg.sha512"
+  ],
+  "logs": []
+}

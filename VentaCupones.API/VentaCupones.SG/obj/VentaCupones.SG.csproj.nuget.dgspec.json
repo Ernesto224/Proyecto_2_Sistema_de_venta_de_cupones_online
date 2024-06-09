@@ -1,0 +1,205 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\Ernesto\\Desktop\\VentaCupones.API\\VentaCupones.SG\\VentaCupones.SG.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\Ernesto\\Desktop\\VentaCupones.API\\VentaCupones.BC\\VentaCupones.BC.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Ernesto\\Desktop\\VentaCupones.API\\VentaCupones.BC\\VentaCupones.BC.csproj",
+        "projectName": "VentaCupones.BC",
+        "projectPath": "C:\\Users\\Ernesto\\Desktop\\VentaCupones.API\\VentaCupones.BC\\VentaCupones.BC.csproj",
+        "packagesPath": "C:\\Users\\Ernesto\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Ernesto\\Desktop\\VentaCupones.API\\VentaCupones.BC\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Ernesto\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Ernesto\\Desktop\\VentaCupones.API\\VentaCupones.BW\\VentaCupones.BW.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Ernesto\\Desktop\\VentaCupones.API\\VentaCupones.BW\\VentaCupones.BW.csproj",
+        "projectName": "VentaCupones.BW",
+        "projectPath": "C:\\Users\\Ernesto\\Desktop\\VentaCupones.API\\VentaCupones.BW\\VentaCupones.BW.csproj",
+        "packagesPath": "C:\\Users\\Ernesto\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Ernesto\\Desktop\\VentaCupones.API\\VentaCupones.BW\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Ernesto\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\Ernesto\\Desktop\\VentaCupones.API\\VentaCupones.BC\\VentaCupones.BC.csproj": {
+                "projectPath": "C:\\Users\\Ernesto\\Desktop\\VentaCupones.API\\VentaCupones.BC\\VentaCupones.BC.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Portable.BouncyCastle": {
+              "target": "Package",
+              "version": "[1.9.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Ernesto\\Desktop\\VentaCupones.API\\VentaCupones.SG\\VentaCupones.SG.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Ernesto\\Desktop\\VentaCupones.API\\VentaCupones.SG\\VentaCupones.SG.csproj",
+        "projectName": "VentaCupones.SG",
+        "projectPath": "C:\\Users\\Ernesto\\Desktop\\VentaCupones.API\\VentaCupones.SG\\VentaCupones.SG.csproj",
+        "packagesPath": "C:\\Users\\Ernesto\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Ernesto\\Desktop\\VentaCupones.API\\VentaCupones.SG\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Ernesto\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\Ernesto\\Desktop\\VentaCupones.API\\VentaCupones.BC\\VentaCupones.BC.csproj": {
+                "projectPath": "C:\\Users\\Ernesto\\Desktop\\VentaCupones.API\\VentaCupones.BC\\VentaCupones.BC.csproj"
+              },
+              "C:\\Users\\Ernesto\\Desktop\\VentaCupones.API\\VentaCupones.BW\\VentaCupones.BW.csproj": {
+                "projectPath": "C:\\Users\\Ernesto\\Desktop\\VentaCupones.API\\VentaCupones.BW\\VentaCupones.BW.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

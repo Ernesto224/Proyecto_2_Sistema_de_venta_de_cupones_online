@@ -1,0 +1,147 @@
+{
+  "version": 3,
+  "targets": {
+    "net8.0": {
+      "Portable.BouncyCastle/1.9.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/BouncyCastle.Crypto.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/BouncyCastle.Crypto.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "VentaCupones.BC/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/VentaCupones.BC.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/VentaCupones.BC.dll": {}
+        }
+      },
+      "VentaCupones.BW/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "Portable.BouncyCastle": "1.9.0",
+          "VentaCupones.BC": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/VentaCupones.BW.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/VentaCupones.BW.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Portable.BouncyCastle/1.9.0": {
+      "sha512": "eZZBCABzVOek+id9Xy04HhmgykF0wZg9wpByzrWN7q8qEI0Qen9b7tfd7w8VA3dOeesumMG7C5ZPy0jk7PSRHw==",
+      "type": "package",
+      "path": "portable.bouncycastle/1.9.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net40/BouncyCastle.Crypto.dll",
+        "lib/net40/BouncyCastle.Crypto.xml",
+        "lib/netstandard2.0/BouncyCastle.Crypto.dll",
+        "lib/netstandard2.0/BouncyCastle.Crypto.xml",
+        "portable.bouncycastle.1.9.0.nupkg.sha512",
+        "portable.bouncycastle.nuspec"
+      ]
+    },
+    "VentaCupones.BC/1.0.0": {
+      "type": "project",
+      "path": "../VentaCupones.BC/VentaCupones.BC.csproj",
+      "msbuildProject": "../VentaCupones.BC/VentaCupones.BC.csproj"
+    },
+    "VentaCupones.BW/1.0.0": {
+      "type": "project",
+      "path": "../VentaCupones.BW/VentaCupones.BW.csproj",
+      "msbuildProject": "../VentaCupones.BW/VentaCupones.BW.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net8.0": [
+      "VentaCupones.BC >= 1.0.0",
+      "VentaCupones.BW >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\Ernesto\\.nuget\\packages\\": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "C:\\Users\\Ernesto\\Desktop\\VentaCupones.API\\VentaCupones.SG\\VentaCupones.SG.csproj",
+      "projectName": "VentaCupones.SG",
+      "projectPath": "C:\\Users\\Ernesto\\Desktop\\VentaCupones.API\\VentaCupones.SG\\VentaCupones.SG.csproj",
+      "packagesPath": "C:\\Users\\Ernesto\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Ernesto\\Desktop\\VentaCupones.API\\VentaCupones.SG\\obj\\",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\Ernesto\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "net8.0"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "projectReferences": {
+            "C:\\Users\\Ernesto\\Desktop\\VentaCupones.API\\VentaCupones.BC\\VentaCupones.BC.csproj": {
+              "projectPath": "C:\\Users\\Ernesto\\Desktop\\VentaCupones.API\\VentaCupones.BC\\VentaCupones.BC.csproj"
+            },
+            "C:\\Users\\Ernesto\\Desktop\\VentaCupones.API\\VentaCupones.BW\\VentaCupones.BW.csproj": {
+              "projectPath": "C:\\Users\\Ernesto\\Desktop\\VentaCupones.API\\VentaCupones.BW\\VentaCupones.BW.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
+      }
+    },
+    "frameworks": {
+      "net8.0": {
+        "targetAlias": "net8.0",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}
