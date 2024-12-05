@@ -107,16 +107,18 @@ VALUES ('2024-05-01 00:00:00', '2024-06-01 23:59:59', 0.10, 1, 1, 1),
        ('2024-05-15 00:00:00', '2024-06-15 23:59:59', 0.15, 1, 2, 1),
        ('2024-05-01 00:00:00', '2024-06-01 23:59:59', 0.20, 2, 3, 1),
        ('2024-05-15 00:00:00', '2024-06-15 23:59:59', 0.25, 2, 4, 1);
+	   
 
-DELIMITER //
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `BuscarCupones`(
+DELIMITER 
+//	   
+CREATE DEFINER=root@localhost PROCEDURE BuscarCupones(
     IN p_Categoria INT,
     IN p_Termino VARCHAR(255),
     IN p_Inicio INT,
     IN p_Maximo INT
 )
 BEGIN
+    -- Realizar la consulta principal uniendo con promociones activas en la fecha actual
     SELECT 
         Cup.IDCupon, 
         Cup.Nombre, 
@@ -127,14 +129,17 @@ BEGIN
         Emp.NombreEmpresa,
         Cup.IDCategoria,
         Cat.Nombre AS NombreCategoria,
-        Prom.Descuento,
+        COALESCE(Prom.Descuento, 0) AS Descuento,  -- Aplicar el descuento de la promoción si existe
         Cup.Habilitado
-    FROM cupon AS Cup 
-    LEFT JOIN promocion AS Prom 
+    FROM Cupon AS Cup 
+    LEFT JOIN Promocion AS Prom 
         ON Cup.IDCupon = Prom.IDCupon
-    INNER JOIN empresa AS Emp
+        AND Prom.Habilitado = 1 
+        AND Prom.FechaDeInicio <= CURDATE()
+        AND Prom.FechaDeVencimiento >= CURDATE()
+    INNER JOIN Empresa AS Emp
         ON Cup.IDEmpresa = Emp.IDEmpresa
-    INNER JOIN categoriacupon AS Cat
+    INNER JOIN CategoriaCupon AS Cat
         ON Cup.IDCategoria = Cat.IDCategoria
     WHERE 
         (Cup.IDCategoria = p_Categoria OR p_Categoria = -1) AND 
@@ -142,13 +147,10 @@ BEGIN
          Cup.Ubicacion LIKE CONCAT('%', p_Termino, '%') OR 
          Cat.Nombre LIKE CONCAT('%', p_Termino, '%') OR 
          Emp.NombreEmpresa LIKE CONCAT('%', p_Termino, '%') OR 
-         p_Termino LIKE 'null') AND
+         p_Termino = 'null') AND
         Cup.Habilitado = 1
-    ORDER BY Cup.IDCupon ASC
+    ORDER BY Cup.IDCupon DESC
     LIMIT p_Maximo OFFSET p_Inicio;
-END //
-
+END 
+//
 DELIMITER ;
-
-
-call tarea3_lenguajes_php.BuscarCupones(-1, 'null',0,8);
